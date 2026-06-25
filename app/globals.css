@@ -44,15 +44,13 @@
   --font-kyiv: 'KyivType Sans', serif;
   --font-inter: 'Inter', sans-serif;
 
+  --text-giant: 260px;
   --text-title: 90px;
   --text-body:  30px;
-
-  /* === GRADIENTS === */
-  --background-image-wood-gradient: linear-gradient(135deg, #664033 0%, #1E0C06 60%, #222021 100%);
 }
 
 :root {
-  --background: var(--color-obsidian);
+  --background: var(--color-charcoal);
   --foreground: var(--color-linen);
 }
 
