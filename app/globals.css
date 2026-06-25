@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'KyivType Sans';
+  src: url('/fonts/KyivTypeSans-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  /* === NEUTRALS === */
+  --color-obsidian:    #1E0C06;
+  --color-charcoal:    #222021;
+  --color-slate-dark:  #32353C;
+  --color-slate:       #5B6069;
+  --color-slate-mid:   #848891;
+  --color-silver:      #B0B4BD;
+  --color-ash:         #D2C8C6;
+  --color-linen:       #F1DED0;
+
+  /* === WOOD / TERRACOTTA === */
+  --color-wood-deep:   #664033;
+  --color-wood-bark:   #6C200B;
+  --color-wood-brown:  #8E3921;
+  --color-wood-ember:  #E1764D;
+  --color-wood-sand:   #E59679;
+  --color-wood-blush:  #FB9E6E;
+  --color-wood-peach:  #FFC099;
+  --color-wood-mist:   #FFDBBB;
+
+  /* === BLUE / STEEL === */
+  --color-steel-dark:  #5F7489;
+  --color-steel:       #728BAD;
+  --color-steel-light: #A3B8D7;
+  --color-steel-pale:  #D5DCEE;
+
+  /* === MAUVE / TAUPE === */
+  --color-taupe-dark:  #7A574B;
+  --color-taupe:       #9F8578;
+  --color-taupe-light: #C8B2A7;
+
+  /* === TYPOGRAPHY === */
+  --font-kyiv: 'KyivType Sans', serif;
+  --font-inter: 'Inter', sans-serif;
+
+  --text-title: 90px;
+  --text-body:  30px;
+
+  /* === GRADIENTS === */
+  --background-image-wood-gradient: linear-gradient(135deg, #664033 0%, #1E0C06 60%, #222021 100%);
+}
+
+:root {
+  --background: var(--color-obsidian);
+  --foreground: var(--color-linen);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter);
+  font-size: var(--text-body);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-kyiv);
+  font-weight: 500;
+  font-size: var(--text-title);
+}
