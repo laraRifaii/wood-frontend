@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X, Phone, Mail } from "lucide-react";
 import Image from "next/image";
+
 const navLinks = [
   { href: "/gallery", label: "Gallery" },
   { href: "/price-list", label: "Price for services" },
@@ -22,29 +23,34 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-none py-6 px-6">
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16 ">
+    <header
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 "
+      style={{
+        background: scrolled ? "rgba(34,32,33,0.95)" : "transparent",
+        backdropFilter: scrolled ? "blur(10px)" : "none",
+      }}
+    >
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 text-lg font-bold">
+        <Link href="/">
           <Image
             src="/logo.png"
             alt="BioWood Logo"
             width={120}
-            height={120}
-            color="#ffff"
-            style={{ width: "auto" }}
+            height={50}
+            style={{ width: "auto", height: 50 }}
           />
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8 ">
+        <nav className="hidden md:flex items-center gap-14">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="text-[16px] font-bold text-white font-inter"
+              className="text-base font-bold text-white transition-colors duration-200"
               onMouseEnter={(e) => (e.currentTarget.style.color = "#E1764D")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "#C8B2A7")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "#ffffff")}
             >
               {link.label}
             </Link>
@@ -55,18 +61,17 @@ export default function Navbar() {
         <button
           className="md:hidden p-2"
           onClick={() => setOpen(!open)}
-          style={{ color: "#F1DED0" }}
           aria-label="Toggle menu"
         >
           {open ? (
-            <X size={22} />
+            <X size={22} color="#F1DED0" />
           ) : (
             <Image
               src="/menu.png"
               alt="Menu"
               width={22}
               height={22}
-              style={{ width: "auto" }}
+              style={{ width: 22, height: "auto" }}
             />
           )}
         </button>
@@ -74,17 +79,17 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden border-t bg-charcoal">
+        <div
+          className="md:hidden border-t bg-charcoal"
+          style={{ borderColor: "rgba(255,255,255,0.08)" }}
+        >
           <nav className="flex flex-col px-6 py-4 gap-4">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm py-2 border-b tracking-wide"
-                style={{
-                  color: "#D2C8C6",
-                  borderColor: "rgba(255,255,255,0.06)",
-                }}
+                className="text-sm py-2 border-b text-white tracking-wide"
+                style={{ borderColor: "rgba(255,255,255,0.06)" }}
                 onClick={() => setOpen(false)}
               >
                 {link.label}

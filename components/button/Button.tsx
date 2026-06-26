@@ -12,7 +12,7 @@ export default function Button({ text, href, onClick, type = "button" }: ButtonP
     return (
       <Link
         href={href}
-        className="inline-block px-6 py-2 text-sm font-medium tracking-wide bg-steel text-white transition-opacity rounded-full hover:opacity-80"
+        className="inline-block px-6 py-2 text-sm md:text-body font-medium tracking-wide bg-steel text-white transition-opacity rounded-full hover:opacity-80"
       >
         {text}
       </Link>

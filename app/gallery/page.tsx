@@ -1,3 +1,3 @@
 export default function GalleryPage() {
-  return <></>;
+  return <div>About</div>;
 }
