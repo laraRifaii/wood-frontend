@@ -4,37 +4,72 @@ import GallerySection from "@/components/sections/GallerySection";
 import AdvantagesSection from "@/components/sections/AdvantagesSection";
 import AboutSection from "@/components/sections/AboutSection";
 import ContactSection from "@/components/sections/ContactSection";
-import { defaultContent } from "@/lib/content";
+import {
+  getHero,
+  getWoodTypes,
+  getGallery,
+  getAbout,
+  getAdvantages,
+} from "@/lib/content.api";
 
-export default function HomePage() {
-  const content = defaultContent;
+export default async function HomePage() {
+  try {
+    const [hero, woodTypes, gallery, about, advantages] = await Promise.all([
+      getHero(),
+      getWoodTypes(),
+      getGallery(),
+      getAbout(),
+      getAdvantages(),
+    ]);
 
-  return (
-    <>
+    return (
       <main>
         <HeroSection
-          title={content.hero.title}
-          subtitle={content.hero.subtitle}
-          ctaText={content.hero.ctaText}
-          ctaLink={content.hero.ctaLink}
+          title={hero.title}
+          subtitle={hero.subtitle}
+          ctaText={hero.ctaText}
+          ctaLink={hero.ctaLink}
+          backgroundImage={hero.backgroundImage}
+          image1={hero.image1}
+          image2={hero.image2}
+          image3={hero.image3}
         />
-        <WoodSection woodTypes={content.woodTypes} />
-        <GallerySection images={content.gallery} />
+        <div className="mt-50 md:mt-20">
+          <WoodSection woodTypes={woodTypes} />
+        </div>
+
+        <GallerySection images={gallery} />
         <AdvantagesSection
-          image={content.advantagesSection.image}
-          items={content.advantagesSection.items}
-          cta={content.advantagesSection.cta}
+          image={advantages.image}
+          items={advantages.items}
+          cta={advantages.cta}
         />
         <AboutSection
-          brandName={content.aboutSection.brandName}
-          description={content.aboutSection.description}
-          image1={content.aboutSection.image1}
-          image2={content.aboutSection.image2}
-          image3={content.aboutSection.image3}
+          brandName={about.brandName}
+          description={about.description}
+          image1={about.image1}
+          image2={about.image2}
+          image3={about.image3}
         />
         <ContactSection />
-        
       </main>
-    </>
-  );
+    );
+  } catch (error) {
+    return (
+      <main
+        className="min-h-screen flex items-center justify-center"
+        style={{ background: "#1E0C06" }}
+      >
+        <div className="text-center">
+          <p
+            className="text-sm"
+            style={{ color: "#7A574B", fontFamily: "Inter, sans-serif" }}
+          >
+            Unable to load content. Make sure the backend is running on{" "}
+            {process.env.NEXT_PUBLIC_API_URL}.
+          </p>
+        </div>
+      </main>
+    );
+  }
 }

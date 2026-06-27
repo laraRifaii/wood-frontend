@@ -12,7 +12,7 @@ export default function NotFound() {
       {/* Content — must be above overlay */}
       <div className="relative z-10 text-center">
         <div className="m-0 text-white font-kyiv text-giant p-0 leading-none flex items-center justify-center gap-2">
-          <span>4</span><span><img src='0.png' alt="0" className='w-40 h-60' /></span><span>4</span>
+          <span>4</span><span><img src='/icons/0.png' alt="0" className='w-40 h-60' /></span><span>4</span>
         </div>
         <div className="mb-2 font-kyiv text-white text-body">Woops</div>
         <p className="mb-2 text-[14px] text-white opacity-70">

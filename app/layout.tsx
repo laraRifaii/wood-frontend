@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
+import { AuthProvider } from "@/context/AuthContext";
+import LayoutWrapper from "@/components/layout/LayoutWrapper";
 
 export const metadata: Metadata = {
   title: "Wood App",
@@ -15,16 +14,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={` h-full antialiased`}
-    >
-      
+    <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col">
-        <Navbar />
-        {children}
-        <Footer/>
-        </body>
+        <AuthProvider>
+          <LayoutWrapper>{children}</LayoutWrapper>
+        </AuthProvider>
+      </body>
     </html>
   );
 }
