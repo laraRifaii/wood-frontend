@@ -53,7 +53,7 @@ export default function LoginPage() {
               style={{ color: "#1E0C06" }}
             >
               <Image
-                src="/logo.png"
+                src="/icons/logo.png"
                 alt="BioWood Logo"
                 width={80}
                 height={80}
