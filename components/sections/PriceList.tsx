@@ -98,7 +98,7 @@ export default function PriceList() {
     <section className="bg-charcoal mt-16 mx-6 relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Title */}
-        <h2 className="font-kyiv text-body mb-20  md:text-[60px] md:leading-18 lg:text-title lg:leading-20 text-white  px-10 md:px-20">
+        <h2 className="font-kyiv text-body mb-10  md:text-[60px] md:leading-18 lg:text-title lg:leading-20 text-white  px-10 md:px-20">
           PRICE LIST
         </h2>
 

@@ -91,7 +91,7 @@ export default function AboutAdminPage() {
   if (loading) return <Spinner />;
 
   return (
-    <div className="p-8 max-w-2xl">
+    <div className="p-8 l">
       <PageHeader
         title="About Section"
         description="Edit the about us content on the homepage."

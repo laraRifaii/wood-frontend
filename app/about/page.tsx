@@ -23,7 +23,7 @@ export default async function AboutPage() {
     ]);
 
     return (
-      <main>
+      <main className="mt-20">
         <GallerySection images={gallery} />
 
         <AboutSection

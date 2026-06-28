@@ -13,10 +13,10 @@ export default function AboutSection({
   return (
     <section className="bg-charcoal">
       <div className="max-w-7xl m-0 p-0 ">
-        <div className="max-w-[90%] flex flex-col md:justify-start sm:flex-row gap-6 rounded-tr-3xl rounded-br-3xl py-10   overflow-hidden bg-obsidian ">
+        <div className="max-w-[90%] flex flex-col md:justify-start sm:flex-row gap-6 rounded-tr-3xl rounded-br-3xl py-10 px-8  overflow-hidden bg-obsidian ">
           {/* Left — text */}
-          <div className="flex-1 justify-center ml-20 md:ml-36">
-            <div className="font-kyiv text-body mb-20  md:text-[60px] md:leading-18 lg:text-title lg:leading-20 text-white">
+          <div className="flex-1 justify-center ml-8">
+            <div className="font-kyiv text-body mb-10 md:mb-20  md:text-[60px] md:leading-18 lg:text-title lg:leading-20 text-white">
               ABOUT US
             </div>
             <p className="text-white text-sm md:text-body leading-relaxed">

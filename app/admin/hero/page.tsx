@@ -83,7 +83,7 @@ export default function HeroAdminPage() {
   if (loading) return <div className="p-8 text-sm text-taupe font-inter">Loading...</div>;
 
   return (
-    <div className="p-8 max-w-2xl">
+    <div className="p-8 ">
       <PageHeader
         title="Hero Section"
         description="Edit the main banner on the homepage."

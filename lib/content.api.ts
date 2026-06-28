@@ -1,49 +1,26 @@
-import api from './api';
-import { defaultContent } from './content';
 import axios from 'axios';
+import { HeroContent, WoodType, GalleryImage, TextSection, AdvantagesSection } from '@/types';
 
-// Server components use this — not NEXT_PUBLIC
 const serverApi = axios.create({
-  baseURL: process.env.API_URL || process.env.NEXT_PUBLIC_API_URL,
+  baseURL: process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api',
 });
 
-export async function getHero() {
+async function fetchFromApi<T>(endpoint: string): Promise<T> {
   try {
-    const { data } = await api.get('/hero');
+    const { data } = await serverApi.get<T>(endpoint);
     return data;
-  } catch {
-    return defaultContent.hero;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const status = error.response?.status;
+      const message = error.response?.data?.message || error.message;
+      throw new Error(`[${status}] ${endpoint}: ${message}`);
+    }
+    throw new Error(`Failed to fetch ${endpoint}: ${String(error)}`);
   }
 }
 
-export async function getWoodTypes() {
-  const { data } = await serverApi.get('/wood-types');
-  return data;
-}
-
-export async function getGallery() {
-  try {
-    const { data } = await api.get('/gallery');
-    return data;
-  } catch {
-    return defaultContent.gallery;
-  }
-}
-
-export async function getAbout() {
-  try {
-    const { data } = await api.get('/about');
-    return data;
-  } catch {
-    return defaultContent.aboutSection;
-  }
-}
-
-export async function getAdvantages() {
-  try {
-    const { data } = await api.get('/advantages');
-    return data;
-  } catch {
-    return defaultContent.advantagesSection;
-  }
-}
+export const getHero = () => fetchFromApi<HeroContent>('/hero');
+export const getWoodTypes = () => fetchFromApi<WoodType[]>('/wood-types');
+export const getGallery = () => fetchFromApi<GalleryImage[]>('/gallery');
+export const getAbout = () => fetchFromApi<TextSection>('/about');
+export const getAdvantages = () => fetchFromApi<AdvantagesSection>('/advantages');

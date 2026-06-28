@@ -15,7 +15,7 @@ export function PageHeader({ title, description, action }: {
         <h1 className="font-kyiv text-white text-2xl font-medium mb-1">{title}</h1>
         {description && <p className="text-sm text-taupe font-inter">{description}</p>}
       </div>
-      {action && <div className="flex-shrink-0">{action}</div>}
+      {action && <div className="shrink-0">{action}</div>}
     </div>
   );
 }

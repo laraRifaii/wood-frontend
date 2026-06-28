@@ -98,7 +98,7 @@ export default function AdvantagesAdminPage() {
   const atLimit = data.items.length >= MAX_ITEMS;
 
   return (
-    <div className="p-8 max-w-2xl">
+    <div className="p-8">
       <PageHeader
         title="Advantages"
         description="Manage the advantages section on the homepage."

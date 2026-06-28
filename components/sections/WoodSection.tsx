@@ -11,10 +11,10 @@ interface WoodSectionProps {
 
 export default function WoodSection({ woodTypes }: WoodSectionProps) {
   return (
-    <section className="bg-charcoal py-16 px-6">
-      <div className="max-w-7xl mx-auto">
+    <section className="bg-charcoal py-16">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
         {/* Title */}
-        <div className="font-kyiv text-body md:ml-20 mb-20  md:text-[60px] md:leading-18 lg:text-title lg:leading-20 text-white ">
+        <div className="font-kyiv text-body ml-10 md:ml-20 mb-10 md:text-[60px] md:leading-18 lg:text-title lg:leading-20 text-white">
           THE WOOD WE <br /> WORK WITH
         </div>
 

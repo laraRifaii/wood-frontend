@@ -1,10 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { GalleryImage } from "@/types";
 import { getImageUrl } from "@/lib/utils";
-
+import Image from "next/image";
 interface GallerySectionProps {
   images: GalleryImage[];
 }
@@ -20,48 +19,64 @@ export default function GallerySection({ images }: GallerySectionProps) {
   const currentImage = images[current];
 
   return (
-    <section className="bg-charcoal py-16 px-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="font-kyiv text-body ml-20 mb-20 md:text-[60px] md:leading-18 lg:text-title lg:leading-20 text-white">
+    <section className="bg-charcoal py-16">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+        <div className="font-kyiv text-body ml-10 md:ml-20 mb-10 md:text-title md:leading-18 lg:text-title lg:leading-20 text-white">
           OUR WORK
         </div>
 
-        <div className="relative flex items-center justify-center mx-10 md:mx-20">
+        {/* Full width container, arrows outside */}
+        <div className="relative flex items-center gap-4">
+          {/* Left arrow — outside image */}
           <button
             onClick={prev}
-            className="absolute left-0 z-10 text-white hover:text-steel transition-colors"
+            className="flex-shrink-0 text-white hover:text-steel transition-colors z-10"
             aria-label="Previous"
           >
-            <ChevronLeft size={36} />
+            <Image
+              src="/icons/vector-left.svg"
+              alt="prev"
+              width={26}
+              height={26}
+              className="w-[15px] h-[15px] md:w-[26px] md:h-[25px]"
+            />
           </button>
 
-          <div className="w-full rounded-3xl overflow-hidden aspect-4/3">
+          {/* Image — takes remaining space */}
+          <div className="flex-1 rounded-3xl overflow-hidden aspect-4/3">
             {currentImage.src ? (
               <img
                 src={getImageUrl(currentImage.src)}
                 alt={currentImage.alt}
-                className="w-full h-full object-cover"
+                className="w-full max-h-[764px] rounded-3xl object-cover"
               />
             ) : (
               <div className="w-full h-full bg-taupe-dark" />
             )}
           </div>
 
+          {/* Right arrow — outside image */}
           <button
             onClick={next}
-            className="absolute right-0 z-10 text-white hover:text-steel transition-colors"
+            className="flex-shrink-0 text-white hover:text-steel transition-colors z-10"
             aria-label="Next"
           >
-            <ChevronRight size={36} />
+            <Image
+              src="/icons/vector-right.svg"
+              alt="next"
+              width={26}
+              height={26}
+              className='w-[15px] h-[15px] md:w-[26px] md:h-[25px]'
+            />
           </button>
         </div>
 
-        <div className="flex items-center justify-center gap-2 mt-6">
+        <div className="flex items-center justify-center gap-2 mt-2">
           {images.map((_, i) => (
             <button
               key={i}
               onClick={() => setCurrent(i)}
-              className="w-3 h-3 rounded-full transition-colors"
+              className="w-3 h-3 rounded-full transition-colors "
               style={{
                 background: i === current ? "#728BAD" : "transparent",
                 border: "2px solid #728BAD",

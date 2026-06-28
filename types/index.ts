@@ -23,6 +23,9 @@ export interface HeroContent {
   ctaText: string;
   ctaLink: string;
   backgroundImage?: string;
+  image1?: string;
+  image2?: string;
+  image3?: string;
   updatedAt?: string;
 }
 
@@ -42,8 +45,8 @@ export interface WoodType {
   pros: string[];
   cons: string[];
   order?: number;
-  image?: string;        // used in static/fallback content
-  images?: WoodTypeImage[]; // returned by backend
+  image?: string;        
+  images?: WoodTypeImage[]; 
   createdAt?: string;
   updatedAt?: string;
 }

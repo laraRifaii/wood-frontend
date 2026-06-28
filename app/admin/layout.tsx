@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { useAuth } from '@/context/AuthContext';
 import {
   LayoutDashboard, Layers, Wrench, Package, ImageIcon,
-  Info, Star, LogOut, ExternalLink, ChevronRight
+  Info, Star, LogOut, ExternalLink, ChevronRight, MessageSquare
 } from 'lucide-react';
 
 const navItems = [
@@ -18,6 +18,7 @@ const navItems = [
   { href: '/admin/gallery', label: 'Gallery', icon: ImageIcon },
   { href: '/admin/about', label: 'About', icon: Info },
   { href: '/admin/advantages', label: 'Advantages', icon: Star },
+  { href: '/admin/inquiries', label: 'Inquiries', icon: MessageSquare },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -38,9 +39,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   return (
-    <div className="min-h-screen flex bg-obsidian">
+    <div className="h-screen flex overflow-hidden bg-obsidian">
       {/* Sidebar */}
-      <aside className="w-52 flex-shrink-0 flex flex-col border-r border-wood-deep/15 bg-charcoal">
+      <aside className="w-52 flex-shrink-0 flex flex-col border-r border-wood-deep/15 bg-charcoal h-screen overflow-y-auto">
         {/* Logo */}
         <div className="px-5 h-14 flex items-center border-b border-wood-deep/15">
           <Link href="/" target="_blank">
@@ -96,7 +97,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       </aside>
 
       {/* Main — key forces remount on route change for speed */}
-      <main key={pathname} className="flex-1 overflow-auto bg-obsidian">
+      <main key={pathname} className="flex-1 overflow-y-auto bg-obsidian">
         {children}
       </main>
     </div>

@@ -24,7 +24,7 @@ export default function Navbar() {
 
   return (
     <header
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 rounded-bl-3xl rounded-br-3xl border-none"
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 md:px-6 rounded-bl-3xl rounded-br-3xl border-none"
       style={{
         background: scrolled ? "rgba(30, 12, 6, 0.95)" : "transparent",
         backdropFilter: scrolled ? "blur(10px)" : "none",
