@@ -67,7 +67,7 @@ export default function Navbar() {
             <X size={22} color="#F1DED0" />
           ) : (
             <img
-              src="/menu.png"
+              src="/icons/menu.png"
               alt="Menu"
               width={22}
               height={22}
