@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, Phone, Mail } from "lucide-react";
-import Image from "next/image";
+import { X, Phone, Mail } from "lucide-react";
 
 const navLinks = [
   { href: "/gallery", label: "Gallery" },
@@ -33,7 +32,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
         {/* Logo */}
         <Link href="/">
-          <Image
+          <img
             src="/logo.png"
             alt="BioWood Logo"
             width={120}
@@ -66,7 +65,7 @@ export default function Navbar() {
           {open ? (
             <X size={22} color="#F1DED0" />
           ) : (
-            <Image
+            <img
               src="/menu.png"
               alt="Menu"
               width={22}
