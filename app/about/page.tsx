@@ -1,26 +1,11 @@
 import AboutSection from "@/components/sections/AboutSection";
-import { defaultContent } from "../../lib/content";
-import {
-  getHero,
-  getWoodTypes,
-  getGallery,
-  getAbout,
-  getAdvantages,
-} from "@/lib/content.api";
+import { getGallery, getAbout } from "@/lib/content.api";
 import ContactSection from "@/components/sections/ContactSection";
 import GallerySection from "@/components/sections/GallerySection";
 
 export default async function AboutPage() {
-  const { aboutSection, advantagesSection } = defaultContent;
-
   try {
-    const [hero, woodTypes, gallery, about, advantages] = await Promise.all([
-      getHero(),
-      getWoodTypes(),
-      getGallery(),
-      getAbout(),
-      getAdvantages(),
-    ]);
+    const [gallery, about] = await Promise.all([getGallery(), getAbout()]);
 
     return (
       <main className="mt-20">

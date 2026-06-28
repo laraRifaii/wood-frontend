@@ -1,15 +1,15 @@
 import ContactSection from "@/components/sections/ContactSection";
 import GallerySection from "@/components/sections/GallerySection";
 import WoodSection from "@/components/sections/WoodSection";
-import { defaultContent } from "@/lib/content";
+import { getGallery, getWoodTypes } from "@/lib/content.api";
 
-export default function GalleryPage() {
-  const content = defaultContent;
+export default async function GalleryPage() {
+  const [gallery, woodType] = await Promise.all([getGallery(), getWoodTypes()]);
   return (
     <>
       <main className="pt-20">
-        <GallerySection images={content.gallery} />
-        <WoodSection woodTypes={content.woodTypes} />
+        <GallerySection images={gallery} />
+        <WoodSection woodTypes={woodType} />
         <ContactSection />
       </main>
     </>
