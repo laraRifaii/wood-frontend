@@ -46,7 +46,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="px-5 h-14 flex items-center border-b border-wood-deep/15">
           <Link href="/" target="_blank">
             <Image
-              src="/logo.png"
+              src="/icons/logo.png"
               alt="BioWood"
               width={90}
               height={36}
