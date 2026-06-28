@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { X, Phone, Mail } from "lucide-react";
+import Image from "next/image";
 
 const navLinks = [
   { href: "/gallery", label: "Gallery" },
@@ -32,8 +33,8 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
         {/* Logo */}
         <Link href="/">
-          <img
-            src="/logo.png"
+          <Image
+            src="/icons/logo.png"
             alt="BioWood Logo"
             width={120}
             height={50}
