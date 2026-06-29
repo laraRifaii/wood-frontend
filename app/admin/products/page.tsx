@@ -16,6 +16,7 @@ import {
 } from "@/components/admin/AdminUI";
 import { getImageUrl } from "@/lib/utils";
 import api from "@/lib/api";
+import { compressImage } from "@/lib/compress";
 
 interface WoodImage {
   id: string;
@@ -255,8 +256,9 @@ export default function ProductsAdminPage() {
   const uploadImage = async (woodId: string, file: File) => {
     setUploadingFor(woodId);
     try {
+      const compressed = await compressImage(file);
       const fd = new FormData();
-      fd.append("file", file);
+      fd.append("file", compressed);
       await api.post(`/wood-types/${woodId}/images`, fd, {
         headers: { "Content-Type": "multipart/form-data" },
       });

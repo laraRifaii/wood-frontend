@@ -16,6 +16,7 @@ import {
 } from "@/components/admin/AdminUI";
 import { getImageUrl, stripMeta } from "@/lib/utils";
 import api from "@/lib/api";
+import { compressImage } from "@/lib/compress";
 
 interface AdvantageItem {
   id?: string;
@@ -67,8 +68,9 @@ export default function AdvantagesAdminPage() {
     // NO createObjectURL
     setUploadingImage(true);
     try {
+      const compressed = await compressImage(file);
       const fd = new FormData();
-      fd.append("file", file);
+      fd.append("file", compressed);
       const { data: res } = await api.post("/advantages/upload", fd, {
         headers: { "Content-Type": "multipart/form-data" },
       });

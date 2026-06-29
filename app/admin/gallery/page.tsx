@@ -11,6 +11,7 @@ import {
 } from "@/components/admin/AdminUI";
 import { getImageUrl } from "@/lib/utils";
 import api from "@/lib/api";
+import { compressImage } from "@/lib/compress";
 
 interface GalleryImage {
   id: string;
@@ -64,8 +65,9 @@ export default function GalleryAdminPage() {
     setUploading(true);
     try {
       for (const file of Array.from(files)) {
+        const compressed = await compressImage(file);
         const fd = new FormData();
-        fd.append("file", file);
+        fd.append("file", compressed);
         await api.post("/gallery/upload", fd, {
           headers: { "Content-Type": "multipart/form-data" },
           params: { alt: file.name.replace(/\.[^.]+$/, "") },

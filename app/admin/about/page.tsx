@@ -15,7 +15,7 @@ import {
 } from "@/components/admin/AdminUI";
 import { getImageUrl, stripMeta } from "@/lib/utils";
 import api from "@/lib/api";
-
+import { compressImage } from "@/lib/compress";
 interface About {
   id?: string;
   brandName: string;
@@ -72,8 +72,10 @@ export default function AboutAdminPage() {
     // NO createObjectURL — mark uploading and wait for real URL
     setUploadingField(key);
     try {
+      const compressed = await compressImage(file);
       const fd = new FormData();
-      fd.append("file", file);
+      fd.append("file", compressed);
+
       const { data } = await api.post("/about/upload", fd, {
         headers: { "Content-Type": "multipart/form-data" },
       });

@@ -16,6 +16,7 @@ import {
 } from "@/components/admin/AdminUI";
 import { stripMeta, getImageUrl } from "@/lib/utils";
 import api from "@/lib/api";
+import { compressImage } from "@/lib/compress";
 
 const ROUTE_OPTIONS = [
   { label: "Home", value: "/" },
@@ -86,8 +87,9 @@ export default function HeroAdminPage() {
   const handleFileUpload = async (file: File, field: keyof Hero) => {
     setUploadingField(field as string);
     try {
+      const compressed = await compressImage(file);
       const fd = new FormData();
-      fd.append("file", file);
+      fd.append("file", compressed);
       const { data } = await api.post("/hero/upload", fd, {
         headers: { "Content-Type": "multipart/form-data" },
       });
