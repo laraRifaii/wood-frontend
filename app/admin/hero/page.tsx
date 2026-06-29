@@ -102,33 +102,38 @@ export default function HeroAdminPage() {
   };
 
   const handleSave = async () => {
-  // Prevent saving while upload is in progress
-  if (uploadingField) {
-    showToast('Please wait for image upload to finish', 'error');
-    return;
-  }
+    if (uploadingField) {
+      showToast("Please wait for image upload to finish", "error");
+      return;
+    }
+    setSaving(true);
+    try {
+      const payload = stripMeta(hero);
 
-  setSaving(true);
-  try {
-    const payload = stripMeta(hero);
+      // Nuclear option — strip any non-Uploadcare URLs before saving
+      const imageFields = [
+        "backgroundImage",
+        "image1",
+        "image2",
+        "image3",
+      ] as const;
+      for (const field of imageFields) {
+        const val = payload[field];
+        if (val && !val.startsWith("https://ucarecdn.com/")) {
+          delete payload[field];
+        }
+      }
 
-    // Extra safety — never save blob URLs
-    if (payload.backgroundImage?.startsWith('blob:')) delete payload.backgroundImage;
-    if (payload.image1?.startsWith('blob:')) delete payload.image1;
-    if (payload.image2?.startsWith('blob:')) delete payload.image2;
-    if (payload.image3?.startsWith('blob:')) delete payload.image3;
-
-    await api.patch('/hero', payload);
-    setSaved(true);
-    showToast('Hero section updated');
-    setTimeout(() => setSaved(false), 2500);
-  } catch {
-    showToast('Failed to save', 'error');
-  } finally {
-    setSaving(false);
-  }
-};
-
+      await api.patch("/hero", payload);
+      setSaved(true);
+      showToast("Hero section updated");
+      setTimeout(() => setSaved(false), 2500);
+    } catch {
+      showToast("Failed to save", "error");
+    } finally {
+      setSaving(false);
+    }
+  };
   if (loading)
     return <div className="p-8 text-sm text-taupe font-inter">Loading...</div>;
 
@@ -138,7 +143,12 @@ export default function HeroAdminPage() {
         title="Hero Section"
         description="Edit the main banner on the homepage."
         action={
-          <SaveButton onClick={handleSave} loading={saving} saved={saved}  disabled={!!uploadingField}/>
+          <SaveButton
+            onClick={handleSave}
+            loading={saving}
+            saved={saved}
+            disabled={!!uploadingField}
+          />
         }
       />
 
