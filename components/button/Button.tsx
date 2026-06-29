@@ -13,7 +13,7 @@ export default function Button({ text,disabled, href, onClick, type = "button" }
     return (
       <Link
         href={href}
-        className="inline-block px-[24px] py-[8px] md:px-[60px] md:py-[11px] text-[15px] md:text-body font-medium tracking-wide bg-steel text-white transition-opacity rounded-full hover:opacity-80"
+        className="inline-block px-[24px] py-[4px] md:px-[50px] md:py-[0px] text-[15px] md:text-body font-medium tracking-wide bg-steel text-white transition-opacity rounded-full hover:opacity-80"
       >
         {text}
       </Link>
@@ -25,7 +25,7 @@ export default function Button({ text,disabled, href, onClick, type = "button" }
       type={type}
       disabled={disabled}
       onClick={onClick}
-      className="px-[24px] py-[8px] md:px-[70px] md:py-[11px] text-[15px] md:text-body font-medium tracking-wide bg-steel text-white transition-opacity hover:opacity-80 rounded-full"
+      className="px-[24px] py-[4px] md:px-[50px] md:py-[0px] text-[15px] md:text-body font-medium tracking-wide bg-steel text-white transition-opacity hover:opacity-80 rounded-full"
     >
       {text}
     </button>

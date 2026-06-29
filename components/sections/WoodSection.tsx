@@ -19,7 +19,7 @@ export default function WoodSection({ woodTypes }: WoodSectionProps) {
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 ">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 md:pt-10">
           {woodTypes.map((wood) => {
             const imageSrc = getImageUrl(wood.image ?? wood.images?.[0]?.url);
             return (
