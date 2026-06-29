@@ -160,7 +160,6 @@ export function ImageUpload({ value, onChange, label = 'Upload image', uploading
   uploading?: boolean;
 }) {
   const ref = useRef<HTMLInputElement>(null);
-  const safeValue = value && !value.startsWith('blob:') ? value : undefined;
 
   return (
     <div className="flex flex-col gap-2">
@@ -169,10 +168,10 @@ export function ImageUpload({ value, onChange, label = 'Upload image', uploading
           <div className="w-4 h-4 border-2 border-wood-ember border-t-transparent rounded-full animate-spin" />
           <span className="text-xs text-taupe font-inter">Uploading...</span>
         </div>
-      ) : safeValue ? (
+      ) : value ? (
         <div className="relative w-full aspect-video overflow-hidden rounded-sm border border-wood-deep/20">
           <img
-            src={safeValue}
+            src={value}
             alt="Preview"
             className="w-full h-full object-cover"
             onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
@@ -191,7 +190,7 @@ export function ImageUpload({ value, onChange, label = 'Upload image', uploading
         className="flex items-center justify-center gap-2 w-full py-3 border border-dashed border-wood-deep/40 text-xs text-taupe font-inter hover:border-wood-ember hover:text-wood-ember transition-colors rounded-sm"
       >
         <Upload size={13} />
-        {safeValue ? 'Replace image' : label}
+        {value ? 'Replace image' : label}
       </button>
 
       <input
@@ -225,7 +224,7 @@ export function ThumbUpload({ value, onChange, label = 'Upload', uploading = fal
             <div className="w-4 h-4 border-2 border-wood-ember border-t-transparent rounded-full animate-spin" />
             <span className="text-xs text-taupe font-inter">Uploading...</span>
           </div>
-        ) : value && !value.startsWith('blob:') ? (
+        ) : value ? (
           <>
             <img
               src={value}
@@ -254,7 +253,6 @@ export function ThumbUpload({ value, onChange, label = 'Upload', uploading = fal
     </div>
   );
 }
-
 // ── Save Button ────────────────────────────────────────────────────────────
 export function SaveButton({
   onClick,
