@@ -45,6 +45,8 @@ export default function HeroAdminPage() {
     ctaText: "",
     ctaLink: "/",
   });
+  const [uploadingField, setUploadingField] = useState<string | null>(null);
+
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -82,23 +84,20 @@ export default function HeroAdminPage() {
   }, []);
 
   const handleFileUpload = async (file: File, field: keyof Hero) => {
-    // Show preview immediately
-    const preview = URL.createObjectURL(file);
-    setHero((h) => ({ ...h, [field]: preview }));
-
+    setUploadingField(field as string);
     try {
       const fd = new FormData();
       fd.append("file", file);
       const { data } = await api.post("/hero/upload", fd, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      // Replace blob preview with real Uploadcare URL
+      // Only set the real Uploadcare URL — never a blob
       setHero((h) => ({ ...h, [field]: data.url }));
       showToast("Image uploaded");
     } catch {
-      // Revert preview on failure
-      setHero((h) => ({ ...h, [field]: undefined }));
       showToast("Image upload failed", "error");
+    } finally {
+      setUploadingField(null);
     }
   };
 
@@ -203,9 +202,14 @@ export default function HeroAdminPage() {
             {(["image1", "image2", "image3"] as const).map((key, i) => (
               <Field key={key} label={`Image ${i + 1}`}>
                 <ThumbUpload
-                  value={hero[key] ? getImageUrl(hero[key]) : undefined}
+                  value={
+                    hero[key] && !hero[key]!.startsWith("blob:")
+                      ? getImageUrl(hero[key])
+                      : undefined
+                  }
                   onChange={(file) => handleFileUpload(file, key)}
                   label={`Photo ${i + 1}`}
+                  uploading={uploadingField === key}
                 />
               </Field>
             ))}

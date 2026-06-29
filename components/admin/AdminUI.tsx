@@ -207,34 +207,33 @@ export function ImageUpload({
 }
 
 // ── Small Image Upload (for thumbnails) ────────────────────────────────────
-export function ThumbUpload({
-  value,
-  onChange,
-  label = "Upload",
-}: {
+export function ThumbUpload({ value, onChange, label = 'Upload', uploading = false }: {
   value?: string;
   onChange: (file: File) => void;
   label?: string;
+  uploading?: boolean;
 }) {
   const ref = useRef<HTMLInputElement>(null);
 
   return (
     <div className="flex flex-col gap-1.5">
       <div
-        onClick={() => ref.current?.click()}
+        onClick={() => !uploading && ref.current?.click()}
         className="relative w-full h-32 overflow-hidden border border-wood-deep/30 cursor-pointer group rounded-sm"
-        style={{ background: "var(--color-obsidian)" }}
+        style={{ background: 'var(--color-obsidian)' }}
       >
-        {value ? (
+        {uploading ? (
+          <div className="w-full h-full flex flex-col items-center justify-center gap-2">
+            <div className="w-4 h-4 border-2 border-wood-ember border-t-transparent rounded-full animate-spin" />
+            <span className="text-xs text-taupe font-inter">Uploading...</span>
+          </div>
+        ) : value && !value.startsWith('blob:') ? (
           <>
             <img
               src={value}
               alt="Preview"
               className="w-full h-full object-cover"
-              onError={(e) => {
-                // Hide broken image and show upload placeholder
-                (e.currentTarget as HTMLImageElement).style.display = "none";
-              }}
+              onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
             />
             <div className="absolute inset-0 bg-obsidian/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1 text-xs text-linen font-inter">
               <Upload size={12} /> Change
@@ -252,11 +251,7 @@ export function ThumbUpload({
         type="file"
         accept="image/*"
         className="hidden"
-        onChange={(e) => {
-          const f = e.target.files?.[0];
-          if (f) onChange(f);
-          e.target.value = "";
-        }}
+        onChange={e => { const f = e.target.files?.[0]; if (f) onChange(f); e.target.value = ''; }}
       />
     </div>
   );
