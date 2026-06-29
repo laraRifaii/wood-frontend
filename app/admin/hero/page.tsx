@@ -120,12 +120,8 @@ export default function HeroAdminPage() {
 
       for (const field of imageFields) {
         const val = payload[field];
-        if (
-          val &&
-          !val.startsWith("https://ucarecdn.com/") &&
-          !val.startsWith("/")
-        ) {
-          delete payload[field]; // only strip blob: and other bad URLs
+        if (val && !val.startsWith("data:") && !val.startsWith("/")) {
+          delete payload[field];
         }
       }
 

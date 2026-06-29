@@ -1,9 +1,10 @@
 const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:3001';
 
+// lib/utils.ts
 export function getImageUrl(path?: string | null): string {
   if (!path) return '';
-  // Block blob URLs — they're temporary and must never be saved or rendered
-  if (path.startsWith('blob:') || path.startsWith('data:')) return '';
+  if (path.startsWith('blob:')) return '';        // still block blobs
+  if (path.startsWith('data:')) return path;      // ✅ allow data URLs
   if (path.startsWith('http')) return path;
   if (path.startsWith('/uploads/')) return `${BACKEND_URL}${path}`;
   return path;
