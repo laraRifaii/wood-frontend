@@ -1,10 +1,14 @@
-'use client';
+"use client";
 
-import { ReactNode, useRef } from 'react';
-import { Check, Upload, X } from 'lucide-react';
+import { ReactNode, useRef } from "react";
+import { Check, Upload, X } from "lucide-react";
 
 // ── Page Header ────────────────────────────────────────────────────────────
-export function PageHeader({ title, description, action }: {
+export function PageHeader({
+  title,
+  description,
+  action,
+}: {
   title: string;
   description?: string;
   action?: ReactNode;
@@ -12,8 +16,12 @@ export function PageHeader({ title, description, action }: {
   return (
     <div className="flex items-start justify-between mb-8 gap-4">
       <div>
-        <h1 className="font-kyiv text-white text-2xl font-medium mb-1">{title}</h1>
-        {description && <p className="text-sm text-taupe font-inter">{description}</p>}
+        <h1 className="font-kyiv text-white text-2xl font-medium mb-1">
+          {title}
+        </h1>
+        {description && (
+          <p className="text-sm text-taupe font-inter">{description}</p>
+        )}
       </div>
       {action && <div className="shrink-0">{action}</div>}
     </div>
@@ -21,9 +29,17 @@ export function PageHeader({ title, description, action }: {
 }
 
 // ── Card ───────────────────────────────────────────────────────────────────
-export function Card({ children, className = '' }: { children: ReactNode; className?: string }) {
+export function Card({
+  children,
+  className = "",
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   return (
-    <div className={`border border-wood-deep/20 bg-obsidian/60 p-6 rounded-sm ${className}`}>
+    <div
+      className={`border border-wood-deep/20 bg-obsidian/60 p-6 rounded-sm ${className}`}
+    >
       {children}
     </div>
   );
@@ -34,16 +50,28 @@ export function SectionLabel({ children }: { children: ReactNode }) {
   return (
     <div className="flex items-center gap-3 mb-5">
       <div className="w-4 h-px bg-wood-ember" />
-      <span className="text-xs uppercase tracking-widest text-wood-ember font-inter">{children}</span>
+      <span className="text-xs uppercase tracking-widest text-wood-ember font-inter">
+        {children}
+      </span>
     </div>
   );
 }
 
 // ── Field ──────────────────────────────────────────────────────────────────
-export function Field({ label, hint, children }: { label: string; hint?: string; children: ReactNode }) {
+export function Field({
+  label,
+  hint,
+  children,
+}: {
+  label: string;
+  hint?: string;
+  children: ReactNode;
+}) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-xs uppercase tracking-widest text-taupe font-inter">{label}</label>
+      <label className="text-xs uppercase tracking-widest text-taupe font-inter">
+        {label}
+      </label>
       {children}
       {hint && <span className="text-xs text-slate font-inter">{hint}</span>}
     </div>
@@ -51,7 +79,13 @@ export function Field({ label, hint, children }: { label: string; hint?: string;
 }
 
 // ── Input ──────────────────────────────────────────────────────────────────
-export function Input({ value, onChange, placeholder, type = 'text', disabled }: {
+export function Input({
+  value,
+  onChange,
+  placeholder,
+  type = "text",
+  disabled,
+}: {
   value: string;
   onChange: (v: string) => void;
   placeholder?: string;
@@ -62,7 +96,7 @@ export function Input({ value, onChange, placeholder, type = 'text', disabled }:
     <input
       type={type}
       value={value}
-      onChange={e => onChange(e.target.value)}
+      onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
       disabled={disabled}
       className="w-full px-3 py-2.5 text-sm bg-obsidian border border-wood-deep/30 text-linen font-inter outline-none transition-colors focus:border-wood-ember disabled:opacity-40 rounded-sm"
@@ -71,7 +105,12 @@ export function Input({ value, onChange, placeholder, type = 'text', disabled }:
 }
 
 // ── Textarea ───────────────────────────────────────────────────────────────
-export function Textarea({ value, onChange, placeholder, rows = 4 }: {
+export function Textarea({
+  value,
+  onChange,
+  placeholder,
+  rows = 4,
+}: {
   value: string;
   onChange: (v: string) => void;
   placeholder?: string;
@@ -80,7 +119,7 @@ export function Textarea({ value, onChange, placeholder, rows = 4 }: {
   return (
     <textarea
       value={value}
-      onChange={e => onChange(e.target.value)}
+      onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
       rows={rows}
       className="w-full px-3 py-2.5 text-sm bg-obsidian border border-wood-deep/30 text-linen font-inter outline-none transition-colors focus:border-wood-ember resize-vertical rounded-sm"
@@ -89,7 +128,11 @@ export function Textarea({ value, onChange, placeholder, rows = 4 }: {
 }
 
 // ── Select ─────────────────────────────────────────────────────────────────
-export function Select({ value, onChange, options }: {
+export function Select({
+  value,
+  onChange,
+  options,
+}: {
   value: string;
   onChange: (v: string) => void;
   options: { label: string; value: string }[];
@@ -97,10 +140,10 @@ export function Select({ value, onChange, options }: {
   return (
     <select
       value={value}
-      onChange={e => onChange(e.target.value)}
+      onChange={(e) => onChange(e.target.value)}
       className="w-full px-3 py-2.5 text-sm bg-obsidian border border-wood-deep/30 text-linen font-inter outline-none transition-colors focus:border-wood-ember rounded-sm"
     >
-      {options.map(opt => (
+      {options.map((opt) => (
         <option key={opt.value} value={opt.value} className="bg-obsidian">
           {opt.label}
         </option>
@@ -110,7 +153,11 @@ export function Select({ value, onChange, options }: {
 }
 
 // ── Image Upload ───────────────────────────────────────────────────────────
-export function ImageUpload({ value, onChange, label = 'Upload image' }: {
+export function ImageUpload({
+  value,
+  onChange,
+  label = "Upload image",
+}: {
   value?: string;
   onChange: (file: File) => void;
   label?: string;
@@ -121,7 +168,14 @@ export function ImageUpload({ value, onChange, label = 'Upload image' }: {
     <div className="flex flex-col gap-2">
       {value && (
         <div className="relative w-full aspect-video overflow-hidden rounded-sm border border-wood-deep/20">
-          <img src={value} alt="Preview" className="w-full h-full object-cover" />
+          <img
+            src={value}
+            alt="Preview"
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).style.display = "none";
+            }}
+          />
           <button
             onClick={() => ref.current?.click()}
             className="absolute inset-0 bg-obsidian/70 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-xs text-linen font-inter"
@@ -135,21 +189,29 @@ export function ImageUpload({ value, onChange, label = 'Upload image' }: {
         className="flex items-center justify-center gap-2 w-full py-3 border border-dashed border-wood-deep/40 text-xs text-taupe font-inter hover:border-wood-ember hover:text-wood-ember transition-colors rounded-sm"
       >
         <Upload size={13} />
-        {value ? 'Replace image' : label}
+        {value ? "Replace image" : label}
       </button>
       <input
         ref={ref}
         type="file"
         accept="image/*"
         className="hidden"
-        onChange={e => { const f = e.target.files?.[0]; if (f) onChange(f); e.target.value = ''; }}
+        onChange={(e) => {
+          const f = e.target.files?.[0];
+          if (f) onChange(f);
+          e.target.value = "";
+        }}
       />
     </div>
   );
 }
 
 // ── Small Image Upload (for thumbnails) ────────────────────────────────────
-export function ThumbUpload({ value, onChange, label = 'Upload' }: {
+export function ThumbUpload({
+  value,
+  onChange,
+  label = "Upload",
+}: {
   value?: string;
   onChange: (file: File) => void;
   label?: string;
@@ -161,11 +223,19 @@ export function ThumbUpload({ value, onChange, label = 'Upload' }: {
       <div
         onClick={() => ref.current?.click()}
         className="relative w-full h-32 overflow-hidden border border-wood-deep/30 cursor-pointer group rounded-sm"
-        style={{ background: 'var(--color-obsidian)' }}
+        style={{ background: "var(--color-obsidian)" }}
       >
         {value ? (
           <>
-            <img src={value} alt="Preview" className="w-full h-full object-cover" />
+            <img
+              src={value}
+              alt="Preview"
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                // Hide broken image and show upload placeholder
+                (e.currentTarget as HTMLImageElement).style.display = "none";
+              }}
+            />
             <div className="absolute inset-0 bg-obsidian/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1 text-xs text-linen font-inter">
               <Upload size={12} /> Change
             </div>
@@ -182,14 +252,23 @@ export function ThumbUpload({ value, onChange, label = 'Upload' }: {
         type="file"
         accept="image/*"
         className="hidden"
-        onChange={e => { const f = e.target.files?.[0]; if (f) onChange(f); e.target.value = ''; }}
+        onChange={(e) => {
+          const f = e.target.files?.[0];
+          if (f) onChange(f);
+          e.target.value = "";
+        }}
       />
     </div>
   );
 }
 
 // ── Save Button ────────────────────────────────────────────────────────────
-export function SaveButton({ onClick, loading, saved, disabled }: {
+export function SaveButton({
+  onClick,
+  loading,
+  saved,
+  disabled,
+}: {
   onClick: () => void;
   loading?: boolean;
   saved?: boolean;
@@ -200,16 +279,30 @@ export function SaveButton({ onClick, loading, saved, disabled }: {
       onClick={onClick}
       disabled={loading || disabled}
       className={`flex items-center gap-2 px-5 py-2.5 text-sm font-medium font-inter transition-all disabled:opacity-50 rounded-sm ${
-        saved ? 'bg-wood-deep text-linen' : 'bg-wood-ember text-obsidian hover:bg-wood-blush'
+        saved
+          ? "bg-wood-deep text-linen"
+          : "bg-wood-ember text-obsidian hover:bg-wood-blush"
       }`}
     >
-      {saved ? <><Check size={13} /> Saved</> : loading ? 'Saving...' : 'Save changes'}
+      {saved ? (
+        <>
+          <Check size={13} /> Saved
+        </>
+      ) : loading ? (
+        "Saving..."
+      ) : (
+        "Save changes"
+      )}
     </button>
   );
 }
 
 // ── Primary Button ─────────────────────────────────────────────────────────
-export function PrimaryButton({ onClick, children, disabled }: {
+export function PrimaryButton({
+  onClick,
+  children,
+  disabled,
+}: {
   onClick: () => void;
   children: ReactNode;
   disabled?: boolean;
@@ -226,7 +319,11 @@ export function PrimaryButton({ onClick, children, disabled }: {
 }
 
 // ── Ghost Button ───────────────────────────────────────────────────────────
-export function GhostButton({ onClick, children, disabled }: {
+export function GhostButton({
+  onClick,
+  children,
+  disabled,
+}: {
   onClick: () => void;
   children: ReactNode;
   disabled?: boolean;
@@ -243,18 +340,28 @@ export function GhostButton({ onClick, children, disabled }: {
 }
 
 // ── Toast ──────────────────────────────────────────────────────────────────
-export function Toast({ message, type = 'success', onClose }: {
+export function Toast({
+  message,
+  type = "success",
+  onClose,
+}: {
   message: string;
-  type?: 'success' | 'error';
+  type?: "success" | "error";
   onClose?: () => void;
 }) {
   return (
     <div
       className={`fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3 text-sm font-inter rounded-sm shadow-xl ${
-        type === 'success' ? 'bg-wood-deep text-linen' : 'bg-wood-bark text-linen'
+        type === "success"
+          ? "bg-wood-deep text-linen"
+          : "bg-wood-bark text-linen"
       }`}
     >
-      {type === 'success' ? <Check size={14} className="text-wood-ember" /> : <X size={14} className="text-wood-sand" />}
+      {type === "success" ? (
+        <Check size={14} className="text-wood-ember" />
+      ) : (
+        <X size={14} className="text-wood-sand" />
+      )}
       {message}
     </div>
   );
@@ -269,8 +376,3 @@ export function Spinner() {
   );
 }
 
-// ── useToast hook ──────────────────────────────────────────────────────────
-export function useToast() {
-  // Used externally with useState
-  return null;
-}
