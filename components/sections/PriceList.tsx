@@ -115,8 +115,9 @@ export default function PriceList() {
             <Image
               src="/icons/vector-left.svg"
               alt="left"
-              width={32}
-              height={32}
+              width={26}
+              height={26}
+              className="w-[15px] h-[15px] md:w-[26px] md:h-[25px]"
             />
           </button>
 
@@ -125,10 +126,7 @@ export default function PriceList() {
             {/* Left — dimensions */}
             <div className="rounded-2xl overflow-hidden bg-[#d9d9d9]">
               {/* Header */}
-              <div
-                className="grid grid-cols-3 px-4 py-3 text-xs font-bold"
-                style={{ color: "#32353C", fontFamily: "Inter, sans-serif" }}
-              >
+              <div className="grid grid-cols-3 px-1 md:px-4 py-3 text-xs font-bold text-[#32353C]">
                 <span>délka</span>
                 <span>šiřka</span>
                 <span>tloustka</span>
@@ -137,7 +135,7 @@ export default function PriceList() {
               {category.rows.map((row, i) => (
                 <div
                   key={i}
-                  className="grid grid-cols-3 px-4 py-3 text-sm border-t"
+                  className="grid grid-cols-3 px-2 md:px-4 py-3 text-xs md:text-sm border-t"
                   style={{
                     borderColor: "rgba(0,0,0,0.08)",
                     fontFamily: "Inter, sans-serif",
@@ -146,10 +144,7 @@ export default function PriceList() {
                 >
                   {i === 0 && (
                     <>
-                      <span
-                        className="col-span-3 font-bold text-xs mb-1"
-                        style={{ color: "#32353C" }}
-                      >
+                      <span className="col-span-3 font-bold text-xs mb-1 text-[#32353C]">
                         {category.name}
                       </span>
                     </>
@@ -170,10 +165,7 @@ export default function PriceList() {
               }}
             >
               {/* Header */}
-              <div
-                className="grid grid-cols-3 px-4 py-3 text-xs font-bold"
-                style={{ color: "#1E0C06", fontFamily: "Inter, sans-serif" }}
-              >
+              <div className="grid grid-cols-3 px-4 py-3 text-xs font-bold text-[#1E0C06]">
                 <span>m3</span>
                 <span>cena m3</span>
                 <span>cena ks.</span>
@@ -182,7 +174,7 @@ export default function PriceList() {
               {category.rows.map((row, i) => (
                 <div
                   key={i}
-                  className="grid grid-cols-3 px-4 py-3 text-sm border-t "
+                  className="grid grid-cols-3 px-2 md:px-4 py-3 text-xs md:text-sm border-t "
                   style={{
                     borderColor: "rgba(0,0,0,0.1)",
                     fontFamily: "Inter, sans-serif",
@@ -208,8 +200,9 @@ export default function PriceList() {
             <Image
               src="/icons/vector-right.svg"
               alt="right"
-              width={32}
-              height={32}
+              width={26}
+              height={26}
+              className="w-[15px] h-[15px] md:w-[26px] md:h-[25px]"
             />
           </button>
         </div>
