@@ -37,7 +37,7 @@ A production-quality web application for **BioWood**, a solid wood products comp
 
 ```bash
 git clone https://github.com/laraRifaii/wood-frontend.git
-cd biowood-frontend
+cd wood-frontend
 npm install
 ```
 
