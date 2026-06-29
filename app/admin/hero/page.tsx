@@ -102,27 +102,32 @@ export default function HeroAdminPage() {
   };
 
   const handleSave = async () => {
-    setSaving(true);
-    try {
-      const payload = stripMeta(hero);
+  // Prevent saving while upload is in progress
+  if (uploadingField) {
+    showToast('Please wait for image upload to finish', 'error');
+    return;
+  }
 
-      // Never save blob URLs to the database
-      if (payload.backgroundImage?.startsWith("blob:"))
-        delete payload.backgroundImage;
-      if (payload.image1?.startsWith("blob:")) delete payload.image1;
-      if (payload.image2?.startsWith("blob:")) delete payload.image2;
-      if (payload.image3?.startsWith("blob:")) delete payload.image3;
+  setSaving(true);
+  try {
+    const payload = stripMeta(hero);
 
-      await api.patch("/hero", payload);
-      setSaved(true);
-      showToast("Hero section updated");
-      setTimeout(() => setSaved(false), 2500);
-    } catch {
-      showToast("Failed to save", "error");
-    } finally {
-      setSaving(false);
-    }
-  };
+    // Extra safety — never save blob URLs
+    if (payload.backgroundImage?.startsWith('blob:')) delete payload.backgroundImage;
+    if (payload.image1?.startsWith('blob:')) delete payload.image1;
+    if (payload.image2?.startsWith('blob:')) delete payload.image2;
+    if (payload.image3?.startsWith('blob:')) delete payload.image3;
+
+    await api.patch('/hero', payload);
+    setSaved(true);
+    showToast('Hero section updated');
+    setTimeout(() => setSaved(false), 2500);
+  } catch {
+    showToast('Failed to save', 'error');
+  } finally {
+    setSaving(false);
+  }
+};
 
   if (loading)
     return <div className="p-8 text-sm text-taupe font-inter">Loading...</div>;
@@ -133,7 +138,7 @@ export default function HeroAdminPage() {
         title="Hero Section"
         description="Edit the main banner on the homepage."
         action={
-          <SaveButton onClick={handleSave} loading={saving} saved={saved} />
+          <SaveButton onClick={handleSave} loading={saving} saved={saved}  disabled={!!uploadingField}/>
         }
       />
 
