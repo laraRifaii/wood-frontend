@@ -186,12 +186,13 @@ export default function HeroAdminPage() {
           <SectionLabel>Background image</SectionLabel>
           <ImageUpload
             value={
-              hero.backgroundImage
+              hero.backgroundImage && !hero.backgroundImage.startsWith("blob:")
                 ? getImageUrl(hero.backgroundImage)
                 : undefined
             }
             onChange={(file) => handleFileUpload(file, "backgroundImage")}
             label="Upload background image"
+            uploading={uploadingField === "backgroundImage"}
           />
         </Card>
 

@@ -153,28 +153,29 @@ export function Select({
 }
 
 // ── Image Upload ───────────────────────────────────────────────────────────
-export function ImageUpload({
-  value,
-  onChange,
-  label = "Upload image",
-}: {
+export function ImageUpload({ value, onChange, label = 'Upload image', uploading = false }: {
   value?: string;
   onChange: (file: File) => void;
   label?: string;
+  uploading?: boolean;
 }) {
   const ref = useRef<HTMLInputElement>(null);
+  const safeValue = value && !value.startsWith('blob:') ? value : undefined;
 
   return (
     <div className="flex flex-col gap-2">
-      {value && (
+      {uploading ? (
+        <div className="w-full aspect-video border border-wood-deep/20 rounded-sm flex flex-col items-center justify-center gap-2">
+          <div className="w-4 h-4 border-2 border-wood-ember border-t-transparent rounded-full animate-spin" />
+          <span className="text-xs text-taupe font-inter">Uploading...</span>
+        </div>
+      ) : safeValue ? (
         <div className="relative w-full aspect-video overflow-hidden rounded-sm border border-wood-deep/20">
           <img
-            src={value}
+            src={safeValue}
             alt="Preview"
             className="w-full h-full object-cover"
-            onError={(e) => {
-              (e.currentTarget as HTMLImageElement).style.display = "none";
-            }}
+            onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
           />
           <button
             onClick={() => ref.current?.click()}
@@ -183,29 +184,26 @@ export function ImageUpload({
             <Upload size={14} /> Change image
           </button>
         </div>
-      )}
+      ) : null}
+
       <button
         onClick={() => ref.current?.click()}
         className="flex items-center justify-center gap-2 w-full py-3 border border-dashed border-wood-deep/40 text-xs text-taupe font-inter hover:border-wood-ember hover:text-wood-ember transition-colors rounded-sm"
       >
         <Upload size={13} />
-        {value ? "Replace image" : label}
+        {safeValue ? 'Replace image' : label}
       </button>
+
       <input
         ref={ref}
         type="file"
         accept="image/*"
         className="hidden"
-        onChange={(e) => {
-          const f = e.target.files?.[0];
-          if (f) onChange(f);
-          e.target.value = "";
-        }}
+        onChange={e => { const f = e.target.files?.[0]; if (f) onChange(f); e.target.value = ''; }}
       />
     </div>
   );
 }
-
 // ── Small Image Upload (for thumbnails) ────────────────────────────────────
 export function ThumbUpload({ value, onChange, label = 'Upload', uploading = false }: {
   value?: string;
