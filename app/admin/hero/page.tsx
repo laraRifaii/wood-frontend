@@ -203,11 +203,7 @@ export default function HeroAdminPage() {
             {(["image1", "image2", "image3"] as const).map((key, i) => (
               <Field key={key} label={`Image ${i + 1}`}>
                 <ThumbUpload
-                  value={
-                    hero[key] && !hero[key]!.startsWith("blob:")
-                      ? getImageUrl(hero[key])
-                      : undefined
-                  }
+                  value={hero[key] ? getImageUrl(hero[key]!) : undefined}
                   onChange={(file) => handleFileUpload(file, key)}
                   label={`Photo ${i + 1}`}
                   uploading={uploadingField === key}
