@@ -22,6 +22,7 @@ export default async function HomePage() {
       getAdvantages(),
     ]);
 
+    console.log("advantages image:", advantages.image); // check Railway logs
     return (
       <main>
         <HeroSection

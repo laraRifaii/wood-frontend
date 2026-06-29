@@ -3,6 +3,10 @@ import { HeroContent, WoodType, GalleryImage, TextSection, AdvantagesSection } f
 
 const serverApi = axios.create({
   baseURL: process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api',
+  headers: {
+    'Cache-Control': 'no-cache, no-store',
+    'Pragma': 'no-cache',
+  },
 });
 
 async function fetchFromApi<T>(endpoint: string): Promise<T> {
