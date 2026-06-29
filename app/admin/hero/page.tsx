@@ -65,7 +65,17 @@ export default function HeroAdminPage() {
     api
       .get("/hero")
       .then((r) => {
-        setHero(r.data);
+        // Filter out any blob URLs that may have been saved incorrectly
+        const data = r.data;
+        setHero({
+          ...data,
+          image1: data.image1?.startsWith("blob:") ? undefined : data.image1,
+          image2: data.image2?.startsWith("blob:") ? undefined : data.image2,
+          image3: data.image3?.startsWith("blob:") ? undefined : data.image3,
+          backgroundImage: data.backgroundImage?.startsWith("blob:")
+            ? undefined
+            : data.backgroundImage,
+        });
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -95,7 +105,16 @@ export default function HeroAdminPage() {
   const handleSave = async () => {
     setSaving(true);
     try {
-      await api.patch("/hero", stripMeta(hero));
+      const payload = stripMeta(hero);
+
+      // Never save blob URLs to the database
+      if (payload.backgroundImage?.startsWith("blob:"))
+        delete payload.backgroundImage;
+      if (payload.image1?.startsWith("blob:")) delete payload.image1;
+      if (payload.image2?.startsWith("blob:")) delete payload.image2;
+      if (payload.image3?.startsWith("blob:")) delete payload.image3;
+
+      await api.patch("/hero", payload);
       setSaved(true);
       showToast("Hero section updated");
       setTimeout(() => setSaved(false), 2500);
