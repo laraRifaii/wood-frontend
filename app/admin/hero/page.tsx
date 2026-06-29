@@ -1,19 +1,28 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import {
-  PageHeader, Card, Field, Input, Textarea, Select,
-  SaveButton, Toast, SectionLabel, ImageUpload, ThumbUpload
-} from '@/components/admin/AdminUI';
-import { stripMeta, getImageUrl } from '@/lib/utils';
-import api from '@/lib/api';
+  PageHeader,
+  Card,
+  Field,
+  Input,
+  Textarea,
+  Select,
+  SaveButton,
+  Toast,
+  SectionLabel,
+  ImageUpload,
+  ThumbUpload,
+} from "@/components/admin/AdminUI";
+import { stripMeta, getImageUrl } from "@/lib/utils";
+import api from "@/lib/api";
 
 const ROUTE_OPTIONS = [
-  { label: 'Home', value: '/' },
-  { label: 'Gallery', value: '/gallery' },
-  { label: 'Price List', value: '/price-list' },
-  { label: 'About Us', value: '/about' },
-  { label: 'Contact', value: '/contact' },
+  { label: "Home", value: "/" },
+  { label: "Gallery", value: "/gallery" },
+  { label: "Price List", value: "/price-list" },
+  { label: "About Us", value: "/about" },
+  { label: "Contact", value: "/contact" },
 ];
 
 interface Hero {
@@ -30,64 +39,84 @@ interface Hero {
 }
 
 export default function HeroAdminPage() {
-  const [hero, setHero] = useState<Hero>({ title: '', subtitle: '', ctaText: '', ctaLink: '/' });
+  const [hero, setHero] = useState<Hero>({
+    title: "",
+    subtitle: "",
+    ctaText: "",
+    ctaLink: "/",
+  });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
-  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+  const [toast, setToast] = useState<{
+    message: string;
+    type: "success" | "error";
+  } | null>(null);
 
-  const showToast = (message: string, type: 'success' | 'error' = 'success') => {
+  const showToast = (
+    message: string,
+    type: "success" | "error" = "success",
+  ) => {
     setToast({ message, type });
     setTimeout(() => setToast(null), 3000);
   };
 
   useEffect(() => {
-    api.get('/hero').then(r => { setHero(r.data); setLoading(false); }).catch(() => setLoading(false));
+    api
+      .get("/hero")
+      .then((r) => {
+        setHero(r.data);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
   }, []);
 
   const handleFileUpload = async (file: File, field: keyof Hero) => {
+    // Show preview immediately
     const preview = URL.createObjectURL(file);
-    setHero(h => ({ ...h, [field]: preview }));
+    setHero((h) => ({ ...h, [field]: preview }));
+
     try {
       const fd = new FormData();
-      fd.append('file', file);
-      const token = localStorage.getItem('access_token');
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/hero/upload`, {
-        method: 'POST',
-        headers: token ? { Authorization: `Bearer ${token}` } : {},
-        body: fd,
+      fd.append("file", file);
+      const { data } = await api.post("/hero/upload", fd, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
-      if (res.ok) {
-        const data = await res.json();
-        setHero(h => ({ ...h, [field]: data.url }));
-      }
+      // Replace blob preview with real Uploadcare URL
+      setHero((h) => ({ ...h, [field]: data.url }));
+      showToast("Image uploaded");
     } catch {
-      showToast('Image upload failed', 'error');
+      // Revert preview on failure
+      setHero((h) => ({ ...h, [field]: undefined }));
+      showToast("Image upload failed", "error");
     }
   };
 
   const handleSave = async () => {
     setSaving(true);
     try {
-      await api.patch('/hero', stripMeta(hero));
+      await api.patch("/hero", stripMeta(hero));
       setSaved(true);
-      showToast('Hero section updated');
+      showToast("Hero section updated");
       setTimeout(() => setSaved(false), 2500);
     } catch {
-      showToast('Failed to save', 'error');
+      showToast("Failed to save", "error");
     } finally {
       setSaving(false);
     }
   };
 
-  if (loading) return <div className="p-8 text-sm text-taupe font-inter">Loading...</div>;
+  if (loading)
+    return <div className="p-8 text-sm text-taupe font-inter">Loading...</div>;
 
   return (
     <div className="p-8 ">
       <PageHeader
         title="Hero Section"
         description="Edit the main banner on the homepage."
-        action={<SaveButton onClick={handleSave} loading={saving} saved={saved} />}
+        action={
+          <SaveButton onClick={handleSave} loading={saving} saved={saved} />
+        }
       />
 
       <div className="flex flex-col gap-5">
@@ -98,7 +127,7 @@ export default function HeroAdminPage() {
             <Field label="Headline" hint="Use \n for a line break">
               <Textarea
                 value={hero.title}
-                onChange={v => setHero(h => ({ ...h, title: v }))}
+                onChange={(v) => setHero((h) => ({ ...h, title: v }))}
                 placeholder="SOLID\nWOOD\nPRODUCTS"
                 rows={3}
               />
@@ -106,7 +135,7 @@ export default function HeroAdminPage() {
             <Field label="Subtitle">
               <Textarea
                 value={hero.subtitle}
-                onChange={v => setHero(h => ({ ...h, subtitle: v }))}
+                onChange={(v) => setHero((h) => ({ ...h, subtitle: v }))}
                 placeholder="Describe your brand..."
               />
             </Field>
@@ -120,14 +149,14 @@ export default function HeroAdminPage() {
             <Field label="Button text">
               <Input
                 value={hero.ctaText}
-                onChange={v => setHero(h => ({ ...h, ctaText: v }))}
+                onChange={(v) => setHero((h) => ({ ...h, ctaText: v }))}
                 placeholder="Order"
               />
             </Field>
             <Field label="Button link">
               <Select
                 value={hero.ctaLink}
-                onChange={v => setHero(h => ({ ...h, ctaLink: v }))}
+                onChange={(v) => setHero((h) => ({ ...h, ctaLink: v }))}
                 options={ROUTE_OPTIONS}
               />
             </Field>
@@ -138,8 +167,12 @@ export default function HeroAdminPage() {
         <Card>
           <SectionLabel>Background image</SectionLabel>
           <ImageUpload
-            value={hero.backgroundImage ? getImageUrl(hero.backgroundImage) : undefined}
-            onChange={file => handleFileUpload(file, 'backgroundImage')}
+            value={
+              hero.backgroundImage
+                ? getImageUrl(hero.backgroundImage)
+                : undefined
+            }
+            onChange={(file) => handleFileUpload(file, "backgroundImage")}
             label="Upload background image"
           />
         </Card>
@@ -148,11 +181,11 @@ export default function HeroAdminPage() {
         <Card>
           <SectionLabel>Side images (3 staggered photos)</SectionLabel>
           <div className="grid grid-cols-3 gap-3">
-            {(['image1', 'image2', 'image3'] as const).map((key, i) => (
+            {(["image1", "image2", "image3"] as const).map((key, i) => (
               <Field key={key} label={`Image ${i + 1}`}>
                 <ThumbUpload
                   value={hero[key] ? getImageUrl(hero[key]) : undefined}
-                  onChange={file => handleFileUpload(file, key)}
+                  onChange={(file) => handleFileUpload(file, key)}
                   label={`Photo ${i + 1}`}
                 />
               </Field>
@@ -165,13 +198,17 @@ export default function HeroAdminPage() {
           <SectionLabel>Preview</SectionLabel>
           <div className="p-6 rounded-sm bg-gradient-to-br from-obsidian to-wood-deep/30">
             <div className="font-kyiv text-white text-2xl font-medium mb-2 leading-tight">
-              {hero.title.split('\\n').map((line, i) => (
-                <div key={i} className={i === 1 ? 'text-wood-ember' : ''}>{line || '\u00A0'}</div>
+              {hero.title.split("\\n").map((line, i) => (
+                <div key={i} className={i === 1 ? "text-wood-ember" : ""}>
+                  {line || "\u00A0"}
+                </div>
               ))}
             </div>
-            <p className="text-sm text-taupe font-inter mb-4">{hero.subtitle}</p>
+            <p className="text-sm text-taupe font-inter mb-4">
+              {hero.subtitle}
+            </p>
             <div className="inline-block px-5 py-2 text-xs font-medium font-inter bg-wood-ember text-obsidian rounded-sm">
-              {hero.ctaText || 'Button'}
+              {hero.ctaText || "Button"}
             </div>
           </div>
         </Card>

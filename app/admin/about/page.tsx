@@ -18,12 +18,9 @@ interface About {
   updatedAt?: string;
 }
 
-type ImageFiles = { image1?: File; image2?: File; image3?: File; };
-
 export default function AboutAdminPage() {
   const [about, setAbout] = useState<About>({ brandName: '', description: '' });
   const [previews, setPreviews] = useState<{ image1?: string; image2?: string; image3?: string }>({});
-  const [imageFiles, setImageFiles] = useState<ImageFiles>({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -46,40 +43,30 @@ export default function AboutAdminPage() {
     }).catch(() => setLoading(false));
   }, []);
 
-  const handleImageFile = (key: keyof ImageFiles, file: File) => {
-    const url = URL.createObjectURL(file);
-    setImageFiles(f => ({ ...f, [key]: file }));
-    setPreviews(p => ({ ...p, [key]: url }));
-  };
-
-  const uploadImage = async (file: File): Promise<string> => {
-    const fd = new FormData();
-    fd.append('file', file);
-    const token = localStorage.getItem('access_token');
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/about/upload`, {
-      method: 'POST',
-      headers: token ? { Authorization: `Bearer ${token}` } : {},
-      body: fd,
-    });
-    if (!res.ok) throw new Error('Upload failed');
-    const data = await res.json();
-    return data.url;
+  const handleImageFile = async (key: 'image1' | 'image2' | 'image3', file: File) => {
+    // Show preview immediately
+    setPreviews(p => ({ ...p, [key]: URL.createObjectURL(file) }));
+    try {
+      const fd = new FormData();
+      fd.append('file', file);
+      const { data } = await api.post('/about/upload', fd, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      setAbout(a => ({ ...a, [key]: data.url }));
+      setPreviews(p => ({ ...p, [key]: data.url }));
+      showToast('Image uploaded');
+    } catch {
+      setPreviews(p => ({ ...p, [key]: undefined }));
+      showToast('Upload failed', 'error');
+    }
   };
 
   const handleSave = async () => {
     setSaving(true);
     try {
-      const payload = { ...stripMeta(about) };
-
-      // Upload any new image files
-      if (imageFiles.image1) payload.image1 = await uploadImage(imageFiles.image1);
-      if (imageFiles.image2) payload.image2 = await uploadImage(imageFiles.image2);
-      if (imageFiles.image3) payload.image3 = await uploadImage(imageFiles.image3);
-
-      await api.patch('/about', payload);
+      await api.patch('/about', stripMeta(about));
       setSaved(true);
       showToast('About section updated');
-      setImageFiles({});
       setTimeout(() => setSaved(false), 2500);
     } catch {
       showToast('Failed to save', 'error');
@@ -91,7 +78,7 @@ export default function AboutAdminPage() {
   if (loading) return <Spinner />;
 
   return (
-    <div className="p-8 l">
+    <div className="p-8">
       <PageHeader
         title="About Section"
         description="Edit the about us content on the homepage."

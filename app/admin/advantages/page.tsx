@@ -17,7 +17,6 @@ const MAX_ITEMS = 5;
 export default function AdvantagesAdminPage() {
   const [data, setData] = useState<Advantages>({ cta: '', items: [] });
   const [imagePreview, setImagePreview] = useState<string | undefined>();
-  const [imageFile, setImageFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -36,9 +35,22 @@ export default function AdvantagesAdminPage() {
     }).catch(() => setLoading(false));
   }, []);
 
-  const handleImageFile = (file: File) => {
-    setImageFile(file);
+  const handleImageFile = async (file: File) => {
+    // Show preview immediately
     setImagePreview(URL.createObjectURL(file));
+    try {
+      const fd = new FormData();
+      fd.append('file', file);
+      const { data: res } = await api.post('/advantages/upload', fd, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      setData(d => ({ ...d, image: res.url }));
+      setImagePreview(res.url);
+      showToast('Image uploaded');
+    } catch {
+      setImagePreview(undefined);
+      showToast('Upload failed', 'error');
+    }
   };
 
   const addItem = () => {
@@ -59,31 +71,12 @@ export default function AdvantagesAdminPage() {
   const handleSave = async () => {
     setSaving(true);
     try {
-      const payload: any = {
+      await api.patch('/advantages', {
         cta: data.cta,
-        items: data.items.filter(i => i.description.trim()),
         image: data.image,
-      };
-
-      // Upload image if new file
-      if (imageFile) {
-        const fd = new FormData();
-        fd.append('file', imageFile);
-        const token = localStorage.getItem('access_token');
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/advantages/upload`, {
-          method: 'POST',
-          headers: token ? { Authorization: `Bearer ${token}` } : {},
-          body: fd,
-        });
-        if (res.ok) {
-          const d = await res.json();
-          payload.image = d.url;
-        }
-      }
-
-      await api.patch('/advantages', payload);
+        items: data.items.filter(i => i.description.trim()),
+      });
       setSaved(true);
-      setImageFile(null);
       showToast('Advantages updated');
       setTimeout(() => setSaved(false), 2500);
     } catch {
@@ -150,7 +143,10 @@ export default function AdvantagesAdminPage() {
           <div className="flex flex-col gap-3">
             {data.items.map((item, i) => (
               <div key={i} className="flex items-start gap-3">
-                <div className="w-5 h-5 flex-shrink-0 flex items-center justify-center bg-wood-ember/10 text-wood-ember rounded-sm mt-2.5" style={{ fontSize: 9, fontFamily: 'Inter, sans-serif' }}>
+                <div
+                  className="w-5 h-5 flex-shrink-0 flex items-center justify-center bg-wood-ember/10 text-wood-ember rounded-sm mt-2.5"
+                  style={{ fontSize: 9, fontFamily: 'Inter, sans-serif' }}
+                >
                   {i + 1}
                 </div>
                 <div className="flex-1">
