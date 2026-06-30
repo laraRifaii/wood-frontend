@@ -22,7 +22,7 @@ export default function WoodSection({ woodTypes }: WoodSectionProps) {
           {woodTypes.map((wood) => {
             const imageSrc = getImageUrl(wood.image ?? wood.images?.[0]?.url);
             return (
-              <div key={wood.name} className="flex flex-col items-start w-[277px]">
+              <div key={wood.name} className="flex flex-col items-center pb-5 ">
                 <div className="overflow-hidden bg-taupe-light shrink-0 w-[205px] h-[205px] rounded-[42px]">
                   {imageSrc ? (
                     <Image src={imageSrc} alt={wood.name} width={205} height={205} className="w-full h-full object-cover" />
@@ -30,8 +30,8 @@ export default function WoodSection({ woodTypes }: WoodSectionProps) {
                     <div className="w-full h-full bg-taupe-light" />
                   )}
                 </div>
-                <p className="text-white text-xl font-bold mt-4 mb-3">{wood.name}</p>
-                <ul className="flex flex-col gap-3">
+                <p className="text-white text-[30px] font-bold mt-4 mb-3 ">{wood.name}</p>
+                <ul className="flex flex-col gap-3 ">
                   {wood.pros.map((item) => (
                     <li key={item} className="flex items-center gap-2">
                       <Image src="/icons/check.png" alt="" width={25} height={25} className="shrink-0" />

@@ -47,8 +47,8 @@ export default function AboutSection({
                   alt="About 2"
                   className="absolute top-14 left-0 w-28 h-28 md:w-36 md:h-36 rounded-2xl object-cover shadow-lg"
                   style={{ zIndex: 20 }}
-                  width={33}
-                  height={33}
+                  width={123}
+                  height={123}
                 />
               )}
               {image3 && (
