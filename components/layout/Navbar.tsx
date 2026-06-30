@@ -30,40 +30,31 @@ export default function Navbar() {
 
   return (
     <header
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+      className={`absolute top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        !isHome ? "md:rounded-bl-[79px] md:rounded-br-[79px] rounded-bl-[24px] rounded-br-[24px]" : ""
+      }`}
       style={
         isHome
           ? {
-              background: showSolidBackground
-                ? "rgba(30, 12, 6, 0.95)"
-                : "transparent",
+              background: showSolidBackground ? "rgba(30, 12, 6, 0.95)" : "transparent",
               backdropFilter: showSolidBackground ? "blur(10px)" : "none",
               paddingBottom: showSolidBackground ? "50px" : "0",
               borderBottomLeftRadius: "1.5rem",
               borderBottomRightRadius: "1.5rem",
             }
-          : {}
+          : {
+              background: "#1E0C06",
+              boxShadow: "0px -8px 52px 0px #EEEEEE2B",
+            }
       }
     >
-      {/* Desktop — non-home pages get the big rounded banner */}
-      {!isHome && (
-        <div
-          className="hidden md:block absolute top-[-47px] left-0 right-0 mx-auto"
-          style={{
-            width: "1440px",
-            height: "228px",
-            maxWidth: "100%",
-            borderBottomLeftRadius: "79px",
-            borderBottomRightRadius: "79px",
-            boxShadow: "0px -8px 52px 0px #EEEEEE2B",
-            background: "#1E0C06",
-          }}
-        />
-      )}
       {/* Desktop content */}
       <div
         className="hidden md:flex max-w-7xl mx-auto items-center justify-between px-6 lg:px-[102px]"
-        style={{ paddingTop: isHome ? "50px" : "97px" }}
+        style={{
+          paddingTop: isHome ? "50px" : "60px",
+          paddingBottom: !isHome ? "60px" : undefined,
+        }}
       >
         <Link href="/">
           <Image
@@ -105,15 +96,14 @@ export default function Navbar() {
           ))}
         </nav>
       </div>
+
+      {/* Mobile content */}
       <div
         className="md:hidden relative mx-auto flex items-center justify-between px-6"
         style={{
           width: "100%",
           height: "72px",
-          background: !isHome ? "#1E0C06" : "transparent",
-          borderBottomLeftRadius: !isHome ? "24px" : "0",
-          borderBottomRightRadius: !isHome ? "24px" : "0",
-          boxShadow: !isHome ? "0px -8px 32px 0px #F5F5F52B" : "none",
+          background: isHome ? "transparent" : undefined,
         }}
       >
         <Link href="/">
@@ -132,7 +122,11 @@ export default function Navbar() {
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
-           <Image src='/icons/menu.png' width={23} height={23} color="#F1DED0" alt='menu' />
+          {open ? (
+            <X size={23} color="#F1DED0" strokeWidth={3} />
+          ) : (
+            <Image src="/icons/menu.png" width={23} height={23} alt="menu" />
+          )}
         </button>
       </div>
 
@@ -153,17 +147,11 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <div
-              className="flex items-center gap-2 pt-2"
-              style={{ color: "#9F8578" }}
-            >
+            <div className="flex items-center gap-2 pt-2" style={{ color: "#9F8578" }}>
               <Phone size={13} style={{ color: "#E1764D" }} />
               <span className="text-xs">+961 70 000 000</span>
             </div>
-            <div
-              className="flex items-center gap-2"
-              style={{ color: "#9F8578" }}
-            >
+            <div className="flex items-center gap-2" style={{ color: "#9F8578" }}>
               <Mail size={13} style={{ color: "#E1764D" }} />
               <span className="text-xs">info@biowood.com</span>
             </div>

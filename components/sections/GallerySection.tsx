@@ -31,9 +31,9 @@ export default function GallerySection({ images }: GallerySectionProps) {
 
   return (
     <section className="overflow-hidden">
-      <div className="max-w-[1440px] mx-auto px-6">
+      <div className="max-w-[1440px] mx-auto px-6 py-6">
         {/* Single responsive title — no absolute positioning */}
-         <h2 className="font-kyiv uppercase text-white md:mt-56 mb-10 md:mb-16 pl-0 md:pl-[126px] text-[30px] md:text-[60px] lg:text-[90px] leading-[133%] tracking-normal">
+         <h2 className="font-kyiv uppercase text-white mb-10  md:mx-16 pl-0 md:pl-[126px] text-[30px] md:text-[60px] lg:text-[90px] leading-[133%] tracking-normal">
           OUR WORK
         </h2>
 
