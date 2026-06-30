@@ -7,7 +7,7 @@ export default async function GalleryPage() {
   const [gallery, woodType] = await Promise.all([getGallery(), getWoodTypes()]);
   return (
     <>
-      <main className="pt-20">
+      <main>
         <GallerySection images={gallery} />
         <WoodSection woodTypes={woodType} />
         <ContactSection />

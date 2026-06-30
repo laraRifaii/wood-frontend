@@ -19,7 +19,7 @@ export default function GallerySection({ images }: GallerySectionProps) {
   const currentImage = images[current];
 
   return (
-    <section className="bg-charcoal py-16">
+    <section className=" py-16">
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
         <div className="font-kyiv text-body ml-10 md:ml-20 mb-10 md:text-title md:leading-18 lg:text-title lg:leading-20 text-white">
           OUR WORK
@@ -45,11 +45,14 @@ export default function GallerySection({ images }: GallerySectionProps) {
           {/* Image — takes remaining space */}
           <div className="flex-1 rounded-3xl overflow-hidden aspect-4/3">
             {currentImage.src ? (
-              <img
-                src={getImageUrl(currentImage.src)}
-                alt={currentImage.alt}
-                className="w-full max-h-[764px] rounded-3xl object-cover"
-              />
+              <div className="flex-1 rounded-3xl overflow-hidden">
+                <img
+                  src={getImageUrl(currentImage.src)}
+                  alt={currentImage.alt}
+                  className="w-full object-cover rounded-3xl"
+                  style={{ aspectRatio: "16/9" }}
+                />
+              </div>
             ) : (
               <div className="w-full h-full bg-taupe-dark" />
             )}
@@ -66,7 +69,7 @@ export default function GallerySection({ images }: GallerySectionProps) {
               alt="next"
               width={26}
               height={26}
-              className='w-[15px] h-[15px] md:w-[26px] md:h-[25px]'
+              className="w-[15px] h-[15px] md:w-[26px] md:h-[25px]"
             />
           </button>
         </div>

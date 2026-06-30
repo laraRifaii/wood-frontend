@@ -1,10 +1,9 @@
 "use client";
-import { Phone, MapPin } from "lucide-react";
 import Image from "next/image";
 export default function ContactPage() {
   return (
     <section className="bg-charcoal py-10 md:py-16 px-6 mt-14 md:mt-36">
-      <div className="max-w-7xl mx-auto ">
+      <div className="max-w-7xl mx-auto px-10">
         <div className="flex flex-col sm:flex-row items-center  md:items-start justify-center gap-18 ">
           {/* Left — title + contact info */}
           <div className="flex flex-col md:gap-10">

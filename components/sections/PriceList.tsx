@@ -95,7 +95,7 @@ export default function PriceList() {
   const category = priceData[current];
 
   return (
-    <section className="bg-charcoal mt-16 mx-6 relative overflow-hidden">
+    <section className="mt-16 mx-6 relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Title */}
         <div className="font-kyiv text-body ml-10 md:ml-20 mb-10 md:text-[60px] md:leading-18 lg:text-title lg:leading-20 text-white">

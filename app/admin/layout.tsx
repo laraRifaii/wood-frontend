@@ -41,12 +41,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <div className="h-screen flex overflow-hidden bg-obsidian">
       {/* Sidebar */}
-      <aside className="w-52 flex-shrink-0 flex flex-col border-r border-wood-deep/15 bg-charcoal h-screen overflow-y-auto">
+      <aside className="w-52 shrink-0 flex flex-col border-r border-wood-deep/15 bg-charcoal h-screen overflow-y-auto">
         {/* Logo */}
         <div className="px-5 h-14 flex items-center border-b border-wood-deep/15">
           <Link href="/" target="_blank">
             <Image
-              src="/icons/logo.png"
+              src="/icons/logo.svg"
               alt="BioWood"
               width={90}
               height={36}

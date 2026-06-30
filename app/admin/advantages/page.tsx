@@ -183,7 +183,7 @@ export default function AdvantagesAdminPage() {
             {data.items.map((item, i) => (
               <div key={i} className="flex items-start gap-3">
                 <div
-                  className="w-5 h-5 flex-shrink-0 flex items-center justify-center bg-wood-ember/10 text-wood-ember rounded-sm mt-2.5"
+                  className="w-5 h-5 shrink-0 flex items-center justify-center bg-wood-ember/10 text-wood-ember rounded-sm mt-2.5"
                   style={{ fontSize: 9, fontFamily: "Inter, sans-serif" }}
                 >
                   {i + 1}
@@ -198,7 +198,7 @@ export default function AdvantagesAdminPage() {
                 </div>
                 <button
                   onClick={() => removeItem(i)}
-                  className="mt-2.5 p-1 text-slate hover:text-wood-sand transition-colors flex-shrink-0"
+                  className="mt-2.5 p-1 text-slate hover:text-wood-sand transition-colors shrink-0"
                 >
                   <X size={13} />
                 </button>

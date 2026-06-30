@@ -8,56 +8,51 @@ export default function AboutSection({
   image2,
   image3,
 }: TextSection) {
-  if (!image1 || !image2 || !image3) return null;
-
   return (
-    <section className="bg-charcoal">
-      <div className="max-w-7xl m-0 p-0 ">
-        <div className="max-w-[90%] flex flex-col md:justify-start sm:flex-row gap-6 rounded-tr-3xl rounded-br-3xl py-10 px-8  overflow-hidden bg-obsidian ">
+    <section className="py-16">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+        <div className="bg-obsidian rounded-3xl p-8 md:p-12 flex flex-col md:flex-row gap-8 items-center">
+
           {/* Left — text */}
-          <div className="flex-1 justify-center ml-8">
-            <div className="font-kyiv text-body mb-10 md:mb-20  md:text-[60px] md:leading-18 lg:text-title lg:leading-20 text-white">
+          <div className="flex-1 min-w-0">
+            <h2 className="font-kyiv text-white leading-tight mb-6"
+              style={{ fontSize: 'clamp(36px, 5vw, 56px)' }}>
               ABOUT US
-            </div>
-            <p className="text-white text-sm md:text-body leading-relaxed">
-              <span className="font-bold">{brandName}</span> — {description}
+            </h2>
+            <p className="text-white text-sm md:text-base leading-relaxed font-inter">
+              <strong>{brandName}</strong>{brandName && description ? ' — ' : ''}{description}
             </p>
           </div>
 
-          <div className="relative flex flex-1 flex-col items-center justify-center shrink-0 ">
-            {/* Image 1 — right aligned, behind image 2 */}
-            <div className="w-32 h-32 rounded-2xl overflow-hidden  relative z-10 ml-30 ">
-              <img
-                src={getImageUrl(image1)}
-                alt="About us 1"
-                width={96}
-                height={96}
-                className="w-full h-full object-cover"
-              />
+          {/* Right — staggered overlapping images */}
+          {(image1 || image2 || image3) && (
+            <div className="relative flex-shrink-0 w-48 md:w-64 h-56 md:h-72">
+              {image1 && (
+                <img
+                  src={getImageUrl(image1)}
+                  alt="About 1"
+                  className="absolute top-0 right-0 w-32 h-32 md:w-44 md:h-44 rounded-2xl object-cover shadow-lg"
+                  style={{ zIndex: 30 }}
+                />
+              )}
+              {image2 && (
+                <img
+                  src={getImageUrl(image2)}
+                  alt="About 2"
+                  className="absolute top-14 left-0 w-28 h-28 md:w-36 md:h-36 rounded-2xl object-cover shadow-lg"
+                  style={{ zIndex: 20 }}
+                />
+              )}
+              {image3 && (
+                <img
+                  src={getImageUrl(image3)}
+                  alt="About 3"
+                  className="absolute bottom-0 right-6 w-20 h-20 md:w-28 md:h-28 rounded-2xl object-cover shadow-lg"
+                  style={{ zIndex: 10 }}
+                />
+              )}
             </div>
-
-            {/* Image 2 — left aligned, overlaps image 1 from top */}
-            <div className="w-46 h-46 rounded-2xl overflow-hidden relative z-20 -mt-16 mr-10">
-              <img
-                src={getImageUrl(image2)}  
-                alt="About us 2"
-                width={200}
-                height={200}
-                className="w-full h-full object-cover "
-              />
-            </div>
-
-            {/* Image 3 — right aligned, below */}
-            <div className="w-30 h-30 rounded-2xl overflow-hidden  relative z-10 mt-2 ml-25 ">
-              <img
-                src={getImageUrl(image3)}
-                alt="About us 3"
-                width={96}
-                height={96}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </section>

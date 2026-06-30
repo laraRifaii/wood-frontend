@@ -44,37 +44,39 @@ export default function ContactSection() {
   };
 
   return (
-    <section className="bg-charcoal pt-16 px-6 relative overflow-hidden">
+    <section className="pt-16 relative overflow-hidden">
       {/* Bottom shadow */}
       <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white/5 to-transparent pointer-events-none" />
-      <div className="max-w-7xl mx-auto">
-        {/* Title */}
-        <div className="font-kyiv text-body mb-10 md:mb-20 md:text-[60px] md:leading-18 lg:text-title lg:leading-20 text-white md:text-end text-left px-10 md:px-20">
+
+      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+        {/* Title — centered like Figma */}
+        <h2
+          className="font-kyiv text-white text-center mb-12 leading-tight"
+          style={{ fontSize: "clamp(40px, 6vw, 72px)" }}
+        >
           ANY QUESTIONS?
-        </div>
+        </h2>
+
         {/* Description — mobile only, below title */}
-        <p className="block sm:hidden text-white text-sm leading-relaxed px-10 mb-8 font-inter">
+        <p className="block sm:hidden text-white text-sm leading-relaxed mb-8 font-inter">
           Write to us and we will be sure to answer all your questions and give
           you a comprehensive consultation.
         </p>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 items-start">
           {/* Left — form */}
-          <div className="flex flex-col gap-4 px-10 md:px-20">
-            {/* Success message */}
+          <div className="flex flex-col gap-4">
             {status === "success" && (
               <div className="px-4 py-3 rounded-2xl border border-steel/40 bg-steel/10 text-sm text-steel-light font-inter">
                 ✓ Message sent! We'll be in touch soon.
               </div>
             )}
-
-            {/* Error message */}
             {status === "error" && (
               <div className="px-4 py-3 rounded-2xl border border-wood-bark/40 bg-wood-bark/10 text-sm text-wood-sand font-inter">
                 Something went wrong. Please try again.
               </div>
             )}
 
-            {/* Name */}
             <div>
               <input
                 type="text"
@@ -93,7 +95,6 @@ export default function ContactSection() {
               )}
             </div>
 
-            {/* Phone */}
             <div>
               <input
                 type="tel"
@@ -112,7 +113,6 @@ export default function ContactSection() {
               )}
             </div>
 
-            {/* Question */}
             <div>
               <textarea
                 placeholder="Your question"
@@ -135,7 +135,7 @@ export default function ContactSection() {
               )}
             </div>
 
-            <div className="mb-10 md:mb-2">
+            <div className="pb-10 md:pb-2">
               <Button
                 text={status === "loading" ? "Sending..." : "Send"}
                 onClick={handleSubmit}
@@ -144,19 +144,19 @@ export default function ContactSection() {
             </div>
           </div>
 
-          {/* Right — hidden on mobile */}
-          <div className="hidden sm:flex flex-col gap-6">
-            <p className="text-white text-body leading-relaxed text-left md:text-right pl-10 pr-10 md:pl-20 font-inter">
+          {/* Right — description + wood image */}
+          <div className="hidden sm:flex flex-col justify-between h-full">
+            <p className="text-white text-sm leading-relaxed font-inter md:text-right">
               Write to us and we will be sure to answer all your questions and
               give you a comprehensive consultation.
             </p>
-            <div className="flex justify-end">
+            <div className="flex justify-end mt-auto">
               <Image
                 src="/images/image.svg"
                 alt="Wood slice"
-                width={300}
-                height={300}
-                className="w-78 h-78 object-contain opacity-80 -mb-24"
+                width={380}
+                height={380}
+                className="object-contain opacity-90 -mb-16"
               />
             </div>
           </div>
