@@ -15,7 +15,7 @@ export default function AdvantagesSection({
 }: AdvantagesProps) {
   return (
     <section className=" overflow-hidden">
-      <div className="max-w-[1440px] mx-auto px-4 md:px-0 relative py-6 ">
+      <div className="max-w-[1440px] mx-auto px-4 py-6 md:px-0 relative  ">
         {/* Container — exact: 1188px wide, starting at left-[101px] */}
         <div className="md:pl-[101px] md:w-[1188px]">
           {/* Title — exact: 1040x230, 90px font, weight 500, line-height 133%, offset left 36px within container */}
