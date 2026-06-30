@@ -132,21 +132,7 @@ export default function Navbar() {
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
-          {open ? (
-            <X size={23} color="#F1DED0" strokeWidth={3} />
-          ) : (
-            <div className="flex flex-col gap-[3px] w-[23px]">
-              <div
-                style={{ height: "3px", background: "#F1DED0", width: "23px" }}
-              />
-              <div
-                style={{ height: "3px", background: "#F1DED0", width: "23px" }}
-              />
-              <div
-                style={{ height: "3px", background: "#F1DED0", width: "23px" }}
-              />
-            </div>
-          )}
+           <Image src='/icons/menu.png' width={23} height={23} color="#F1DED0" alt='menu' />
         </button>
       </div>
 

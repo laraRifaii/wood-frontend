@@ -1,4 +1,5 @@
 import Button from "../button/Button";
+import Image from "next/image";
 import { getImageUrl } from "@/lib/utils";
 
 interface AdvantagesProps {
@@ -7,56 +8,71 @@ interface AdvantagesProps {
   items: { description: string }[];
 }
 
-export default function AdvantagesSection({ items, image, cta }: AdvantagesProps) {
+export default function AdvantagesSection({
+  items,
+  image,
+  cta,
+}: AdvantagesProps) {
   return (
-    <section className="py-16">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+    <section className="py-16 overflow-hidden">
+      <div className="max-w-[1440px] mx-auto px-4 md:px-0 relative">
+        {/* Container — exact: 1188px wide, starting at left-[101px] */}
+        <div className="md:pl-[101px] md:w-[1188px]">
+          {/* Title — exact: 1040x230, 90px font, weight 500, line-height 133%, offset left 36px within container */}
+          <h2 className="font-kyiv uppercase text-white mb-10 md:mb-16 pl-0 md:pl-[36px] text-[30px] md:text-[60px] lg:text-[90px] leading-[133%] tracking-normal max-w-[1040px]">
+            ADVANTAGES <br /> WORKING WITH US
+          </h2>
 
-        {/* Title */}
-        <h2
-          className="font-kyiv text-white mb-8 md:mb-12 leading-tight pl-4 md:pl-16"
-          style={{ fontSize: 'clamp(36px, 5vw, 60px)' }}
-        >
-          ADVANTAGES <br /> WORKING WITH US
-        </h2>
-
-        {/* List — mobile only, below title */}
-        <ul className="flex flex-col gap-4 sm:hidden mb-8 pl-4">
-          {items.map((item, i) => (
-            <li key={i} className="text-white text-sm font-inter leading-relaxed">
-              {item.description}
-            </li>
-          ))}
-        </ul>
-
-        {/* Image + list — desktop */}
-        <div className="hidden sm:flex flex-row gap-12 items-center pl-4 md:pl-16 mb-10">
-          {/* Image — smaller, square */}
-          {image && (
-            <div className="w-48 md:w-64 flex-shrink-0 rounded-2xl overflow-hidden aspect-square">
-              <img
-                src={getImageUrl(image)}
-                alt="Carpentry work"
-                className="w-full h-full object-cover"
-              />
-            </div>
-          )}
-
-          {/* List */}
-          <ul className="flex flex-col gap-6">
+          {/* Mobile list — below title */}
+          <ul className="flex flex-col gap-4 md:hidden mb-8">
             {items.map((item, i) => (
-              <li key={i} className="text-white text-sm font-inter leading-relaxed">
+              <li
+                key={i}
+                className="text-white text-sm font-inter leading-relaxed"
+              >
                 {item.description}
               </li>
             ))}
           </ul>
-        </div>
 
-        {/* CTA — centered */}
-        <div className="flex justify-center">
-          <Button text={cta} href="/contact" />
-        </div>
+          {/* Desktop — image left, text right, exact specs */}
+          <div className="hidden md:flex flex-row gap-12 items-center mb-10">
+            {/* Image — exact: 609x386, radius 42px */}
+            {image && (
+              <div className="w-[609px] h-[386px] flex-shrink-0 rounded-[42px] overflow-hidden relative">
+                <Image
+                  src={getImageUrl(image)}
+                  alt="Carpentry work"
+                  width={609}
+                  height={386}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
 
+            {/* List — exact: 30px font, weight 500, line-height 139% */}
+            <ul className="flex flex-col gap-6">
+              {items.map((item, i) => (
+                <li
+                  key={i}
+                  className="font-inter font-medium text-[30px] leading-[139%] tracking-normal text-white"
+                >
+                  {item.description}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* CTA — exact: 472x58, radius 42px, offset left 248px within container */}
+          <div className="flex justify-center md:justify-start md:pl-[248px]">
+            <a
+              href="/contact"
+              className="flex items-center justify-center bg-steel text-white transition-opacity hover:opacity-80 rounded-[42px] gap-[10px] pt-[11px] pr-[70px] pb-[11px] pl-[70px] w-[472px] h-[58px] font-inter font-semibold text-lg"
+            >
+              {cta}
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   );

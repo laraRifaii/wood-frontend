@@ -33,7 +33,7 @@ export default function HeroSection({
     const updateScale = () => {
       const width = window.innerWidth;
       setScale(width >= 1440 ? 1 : Math.max(0.7, width / 1440));
-      setMobileScale(Math.min(1, width / 375));
+      setMobileScale(width / 375);
     };
     updateScale();
     window.addEventListener("resize", updateScale);
@@ -50,10 +50,10 @@ export default function HeroSection({
         }
       `}</style>
 
-      {/* Desktop background — relative wrapper needed for next/image fill */}
-      <div
-        className="hidden lg:block absolute top-0 left-0 w-[908px] h-[1080px] overflow-hidden "
-      >
+      {/* Desktop background — anchored directly to the section (full viewport width),
+          NOT inside the centered 1440px wrapper, so it always touches the left edge
+          and scales proportionally with the viewport instead of leaving gaps. */}
+      <div className="hidden lg:block absolute top-0 left-0 w-[63.0556%] h-[1080px] overflow-hidden">
         <Image
           src={getImageUrl(backgroundImage)}
           alt="Wood background"
@@ -64,10 +64,12 @@ export default function HeroSection({
         <div className="absolute inset-0 bg-slate-dark/60" />
       </div>
 
-      {/* Desktop right panel */}
-      <div className="absolute right-0 top-0 bottom-0 w-5/12 hidden lg:block" />
+      {/* Desktop right panel — flush with the actual right edge of the screen
+          at any viewport width, including ultra-wide screens beyond 1440px. */}
+      <div className="absolute right-0 top-0 bottom-0 w-[36.9444%] hidden lg:block" />
 
-      {/* Desktop card */}
+      {/* Desktop card — kept inside the scaled/centered 1440px wrapper since its
+          measurements are fixed pixel values relative to the 1440px design. */}
       <div
         className="hidden lg:block absolute inset-0 max-w-[1440px] mx-auto origin-top-left"
         style={{ transform: `scale(${scale})` }}
@@ -89,8 +91,9 @@ export default function HeroSection({
                 subtitle
               )}
             </div>
-            
-            <a  href={ctaLink}
+
+            <a
+              href={ctaLink}
               className="absolute top-[554px] left-[50px] w-[225px] h-[58px] rounded-[42px] px-[70px] py-[11px] flex items-center justify-center bg-steel transition-opacity hover:opacity-80"
             >
               <span className="font-inter font-bold text-[30px] leading-[100%] tracking-normal text-white w-[85px] h-[36px]">
@@ -135,7 +138,7 @@ export default function HeroSection({
         className="lg:hidden absolute top-0 left-1/2 origin-top"
         style={{ width: "375px", height: "536px", transform: `translateX(-50%) scale(${mobileScale})` }}
       >
-        <div className="absolute w-[286px] h-[465px] overflow-hidden rounded-tl-[3px] rounded-tr-[41px] rounded-br-[35px]">
+        <div className="absolute w-[286px] h-[465px] overflow-hidden ">
           <Image
             src={getImageUrl(backgroundImage)}
             alt="Wood background"
@@ -164,8 +167,8 @@ export default function HeroSection({
               )}
             </div>
 
-            
-            <a  href={ctaLink}
+            <a
+              href={ctaLink}
               className="absolute flex items-center justify-center bg-steel text-white transition-opacity hover:opacity-80 top-[168px] left-[16px] w-[86px] h-[21px] rounded-[42px] pt-[10px] pr-[17px] pb-[10px] pl-[17px] font-inter font-semibold text-xs"
             >
               {ctaText}
