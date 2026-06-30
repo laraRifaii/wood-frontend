@@ -24,8 +24,7 @@ export default function ContactSection() {
     const newErrors: Partial<FormState> = {};
     if (!form.name.trim()) newErrors.name = "Name is required";
     if (!form.phone.trim()) newErrors.phone = "Phone number is required";
-    if (!form.question.trim())
-      newErrors.question = "Please enter your question";
+    if (!form.question.trim()) newErrors.question = "Please enter your question";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -45,27 +44,22 @@ export default function ContactSection() {
 
   return (
     <section className="overflow-hidden">
-      {/* Bottom shadow */}
-      <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white/5 to-transparent pointer-events-none" />
+      <div className=" bg-gradient-to-t from-white/5 to-transparent pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-        {/* Title — centered like Figma */}
-        <h2
-          className="font-kyiv text-white text-center mb-12 leading-tight"
-          style={{ fontSize: "clamp(40px, 6vw, 72px)" }}
-        >
+      <div className="max-w-7xl mx-auto  ">
+        {/* Title — exact: 904 wide, 90px font, weight 500, line-height 133%, left-[463px] desktop */}
+        <h2 className="font-kyiv uppercase text-white  md:ml-[463px]  mb-12 leading-[133%] text-[40px] md:text-[90px] tracking-normal ">
           ANY QUESTIONS?
         </h2>
 
-        {/* Description — mobile only, below title */}
-        <p className="block sm:hidden text-white text-sm leading-relaxed mb-8 font-inter">
+        <p className="block sm:hidden text-white text-[30px] mr-[68] leading-relaxed mb-8 font-inter">
           Write to us and we will be sure to answer all your questions and give
           you a comprehensive consultation.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 items-start">
-          {/* Left — form */}
-          <div className="flex flex-col gap-4">
+          {/* Left — form, exact: 598x555, ml-[102px] */}
+          <div className="flex flex-col gap-4 w-full md:w-[598px] md:min-h-[555px] md:ml-[102px]">
             {status === "success" && (
               <div className="px-4 py-3 rounded-2xl border border-steel/40 bg-steel/10 text-sm text-steel-light font-inter">
                 ✓ Message sent! We'll be in touch soon.
@@ -89,9 +83,7 @@ export default function ContactSection() {
                 className={`${inputClass} ${errors.name ? "border-wood-bark" : ""}`}
               />
               {errors.name && (
-                <p className="text-xs text-wood-sand mt-1 pl-4 font-inter">
-                  {errors.name}
-                </p>
+                <p className="text-xs text-wood-sand mt-1 pl-4 font-inter">{errors.name}</p>
               )}
             </div>
 
@@ -107,9 +99,7 @@ export default function ContactSection() {
                 className={`${inputClass} ${errors.phone ? "border-wood-bark" : ""}`}
               />
               {errors.phone && (
-                <p className="text-xs text-wood-sand mt-1 pl-4 font-inter">
-                  {errors.phone}
-                </p>
+                <p className="text-xs text-wood-sand mt-1 pl-4 font-inter">{errors.phone}</p>
               )}
             </div>
 
@@ -129,9 +119,7 @@ export default function ContactSection() {
                 }`}
               />
               {errors.question && (
-                <p className="text-xs text-wood-sand mt-1 pl-4 font-inter">
-                  {errors.question}
-                </p>
+                <p className="text-xs text-wood-sand mt-1 pl-4 font-inter">{errors.question}</p>
               )}
             </div>
 
@@ -144,9 +132,9 @@ export default function ContactSection() {
             </div>
           </div>
 
-          {/* Right — description + wood image */}
+          {/* Right — description + wood image, exact specs */}
           <div className="hidden sm:flex flex-col justify-between h-full">
-            <p className="text-white text-sm leading-relaxed font-inter md:text-right">
+            <p className="font-inter font-medium text-[30px] leading-[139%] tracking-normal text-white text-right w-full md:max-w-[546px] md:ml-auto">
               Write to us and we will be sure to answer all your questions and
               give you a comprehensive consultation.
             </p>
@@ -156,7 +144,7 @@ export default function ContactSection() {
                 alt="Wood slice"
                 width={380}
                 height={380}
-                className="object-contain opacity-90 -mb-16"
+                className="object-contain opacity-90 -mb-16 md:rotate-[27.13deg]"
               />
             </div>
           </div>
