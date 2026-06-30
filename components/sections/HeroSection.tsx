@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import Button from "../button/Button";
 import { getImageUrl } from "@/lib/utils";
 
@@ -40,10 +41,7 @@ export default function HeroSection({
   }, []);
 
   return (
-    <section
-      className="relative w-full overflow-hidden z-0 "
-      style={{ height: `${536 * mobileScale}px`}}
-    >
+    <section className="relative w-full overflow-hidden z-0 lg:h-[1080px]" style={{ height: `${536 * mobileScale}px` }}>
       <style jsx>{`
         @media (min-width: 1024px) {
           section {
@@ -52,23 +50,22 @@ export default function HeroSection({
         }
       `}</style>
 
-      {/* Desktop background */}
+      {/* Desktop background — relative wrapper needed for next/image fill */}
       <div
-        className="hidden lg:block absolute top-0 left-0 w-[908px] h-[1080px] bg-cover bg-center"
-        style={{
-          backgroundImage: `url('${getImageUrl(backgroundImage)}')`,
-          borderTopLeftRadius: "3px",
-          borderTopRightRadius: "62px",
-          borderBottomRightRadius: "62px",
-        }}
+        className="hidden lg:block absolute top-0 left-0 w-[908px] h-[1080px] overflow-hidden "
       >
-        <div className="absolute inset-0 bg-[#343536]/60" />
+        <Image
+          src={getImageUrl(backgroundImage)}
+          alt="Wood background"
+          fill
+          priority
+          className="object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-slate-dark/60" />
       </div>
 
       {/* Desktop right panel */}
-      <div className="absolute right-0 top-0 bottom-0 w-5/12 hidden lg:block bg-none">
-        <div className="absolute inset-0 " />
-      </div>
+      <div className="absolute right-0 top-0 bottom-0 w-5/12 hidden lg:block" />
 
       {/* Desktop card */}
       <div
@@ -81,7 +78,7 @@ export default function HeroSection({
             <div className="font-kyiv uppercase absolute top-[75px] left-[50px] w-[622px] text-[90px] font-medium leading-[115%] tracking-normal text-white">
               {title}
             </div>
-            <div className="absolute top-[418px] left-[62px] w-[333px] font-inter font-normal text-[30px] leading-[130%] tracking-normal text-[#FFDBBB]">
+            <div className="absolute top-[418px] left-[62px] w-[333px] font-inter font-normal text-[30px] leading-[130%] tracking-normal text-wood-mist">
               {subtitle.includes("1700") ? (
                 <>
                   {subtitle.split("1700")[0]}
@@ -92,36 +89,40 @@ export default function HeroSection({
                 subtitle
               )}
             </div>
-            <a
-              href={ctaLink}
+            
+            <a  href={ctaLink}
               className="absolute top-[554px] left-[50px] w-[225px] h-[58px] rounded-[42px] px-[70px] py-[11px] flex items-center justify-center bg-steel transition-opacity hover:opacity-80"
             >
-              <span
-                className="font-inter font-bold text-[30px] leading-[100%] tracking-normal text-white"
-                style={{ width: "85px", height: "36px" }}
-              >
+              <span className="font-inter font-bold text-[30px] leading-[100%] tracking-normal text-white w-[85px] h-[36px]">
                 {ctaText}
               </span>
             </a>
             <div className="absolute top-[43px] left-[634px] w-px h-[511px] bg-white/30" />
+
             <div className="absolute top-[43px] left-[925px] w-[205px] h-[205px] rounded-[42px] overflow-hidden">
-              <img
+              <Image
                 src={getImageUrl(image1) || "/images/hero1.jpg"}
                 alt="Wood product 1"
+                width={205}
+                height={205}
                 className="w-full h-full object-cover object-center"
               />
             </div>
             <div className="absolute top-[316px] left-[680px] w-[205px] h-[205px] rounded-[42px] overflow-hidden">
-              <img
+              <Image
                 src={getImageUrl(image2) || "/images/hero2.jpg"}
                 alt="Wood product 2"
+                width={205}
+                height={205}
                 className="w-full h-full object-cover object-center"
               />
             </div>
             <div className="absolute top-[452px] left-[925px] w-[205px] h-[205px] rounded-[42px] overflow-hidden">
-              <img
+              <Image
                 src={getImageUrl(image3) || "/images/hero3.jpg"}
                 alt="Wood product 3"
+                width={205}
+                height={205}
                 className="w-full h-full object-cover object-center"
               />
             </div>
@@ -131,72 +132,27 @@ export default function HeroSection({
 
       {/* Mobile — fixed 375px reference frame, scaled to fit any screen */}
       <div
-        className="lg:hidden absolute top-0 left-0 origin-top-left"
-        style={{
-          maxWidth: "375px",
-          height: "536px",
-          transform: `scale(${mobileScale})`,
-        }}
+        className="lg:hidden absolute top-0 left-1/2 origin-top"
+        style={{ width: "375px", height: "536px", transform: `translateX(-50%) scale(${mobileScale})` }}
       >
-        <div
-          className="absolute w-[286px] h-[465px] bg-cover bg-center"
-          style={{
-            backgroundImage: `url('${getImageUrl(backgroundImage)}')`,
-            borderTopLeftRadius: "3px",
-            borderTopRightRadius: "41px",
-            borderBottomRightRadius: "35px",
-          }}
-        >
-          <div className="absolute inset-0 bg-[#343536]/60" />
+        <div className="absolute w-[286px] h-[465px] overflow-hidden rounded-tl-[3px] rounded-tr-[41px] rounded-br-[35px]">
+          <Image
+            src={getImageUrl(backgroundImage)}
+            alt="Wood background"
+            fill
+            priority
+            className="object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-slate-dark/60" />
         </div>
 
-        <div
-          className="absolute z-10"
-          style={{
-            top: "130px",
-            left: "49px",
-            width: "326px",
-            height: "280px",
-          }}
-        >
-          <div
-            className="absolute inset-0 bg-obsidian overflow-hidden"
-            style={{
-              borderTopLeftRadius: "14px",
-              borderBottomLeftRadius: "14px",
-              boxShadow: "0px 4px 52px 0px #F5F5F52B",
-            }}
-          />
+        <div className="absolute z-10 top-[130px] left-[49px] w-[326px] h-[280px]">
+          <div className="absolute inset-0 bg-obsidian overflow-hidden rounded-tl-[14px] rounded-bl-[14px] shadow-[0px_4px_52px_0px_#F5F5F52B]" />
           <div className="relative w-full h-full text-white">
-            <div
-              className="font-kyiv uppercase absolute"
-              style={{
-                top: "39px",
-                left: "16px",
-                width: "289px",
-                fontSize: "30px",
-                fontWeight: 500,
-                lineHeight: "108%",
-                letterSpacing: "0%",
-                color: "#F5F5F5",
-              }}
-            >
+            <div className="font-kyiv uppercase absolute top-[39px] left-[16px] w-[289px] text-[30px] font-medium leading-[108%] tracking-normal text-white">
               {title}
             </div>
-            <div
-              className="absolute"
-              style={{
-                top: "112px",
-                left: "20px",
-                width: "165px",
-                fontFamily: "Inter, sans-serif",
-                fontWeight: 500,
-                fontSize: "15px",
-                lineHeight: "100%",
-                letterSpacing: "0%",
-                color: "#FFDBBB",
-              }}
-            >
+            <div className="absolute top-[112px] left-[20px] w-[165px] font-inter font-medium text-[15px] leading-[100%] tracking-normal text-wood-mist">
               {subtitle.includes("1700") ? (
                 <>
                   {subtitle.split("1700")[0]}
@@ -208,81 +164,43 @@ export default function HeroSection({
               )}
             </div>
 
-            <a
-              href={ctaLink}
-              className="absolute flex items-center justify-center bg-steel text-white transition-opacity hover:opacity-80"
-              style={{
-                top: "168px",
-                left: "16px",
-                width: "86px",
-                height: "21px",
-                borderRadius: "42px",
-                paddingTop: "10px",
-                paddingRight: "17px",
-                paddingBottom: "10px",
-                paddingLeft: "17px",
-                fontFamily: "Inter, sans-serif",
-                fontWeight: 600,
-                fontSize: "12px",
-              }}
+            
+            <a  href={ctaLink}
+              className="absolute flex items-center justify-center bg-steel text-white transition-opacity hover:opacity-80 top-[168px] left-[16px] w-[86px] h-[21px] rounded-[42px] pt-[10px] pr-[17px] pb-[10px] pl-[17px] font-inter font-semibold text-xs"
             >
               {ctaText}
             </a>
           </div>
         </div>
 
-        <div
-          className="absolute overflow-hidden z-20"
-          style={{
-            top: "260px",
-            left: "274px",
-            width: "90px",
-            height: "90px",
-            borderRadius: "14px",
-          }}
-        >
-          <img
+        <div className="absolute overflow-hidden z-20 top-[260px] left-[274px] w-[90px] h-[90px] rounded-[14px]">
+          <Image
             src={getImageUrl(image1) || "/images/hero1.jpg"}
             alt="Wood product 1"
+            width={90}
+            height={90}
             className="w-full h-full object-cover object-center"
           />
         </div>
 
-        <div
-          className="absolute bg-white/30"
-          style={{ top: "361px", left: "65px", width: "290px", height: "1px" }}
-        />
+        <div className="absolute bg-white/30 top-[361px] left-[65px] w-[290px] h-px" />
 
-        <div
-          className="absolute overflow-hidden z-20"
-          style={{
-            top: "375px",
-            left: "85px",
-            width: "90px",
-            height: "90px",
-            borderRadius: "14px",
-          }}
-        >
-          <img
+        <div className="absolute overflow-hidden z-20 top-[375px] left-[85px] w-[90px] h-[90px] rounded-[14px]">
+          <Image
             src={getImageUrl(image2) || "/images/hero2.jpg"}
             alt="Wood product 2"
+            width={90}
+            height={90}
             className="w-full h-full object-cover object-center"
           />
         </div>
 
-        <div
-          className="absolute overflow-hidden z-20"
-          style={{
-            top: "446px",
-            left: "241px",
-            width: "90px",
-            height: "90px",
-            borderRadius: "14px",
-          }}
-        >
-          <img
+        <div className="absolute overflow-hidden z-20 top-[446px] left-[241px] w-[90px] h-[90px] rounded-[14px]">
+          <Image
             src={getImageUrl(image3) || "/images/hero3.jpg"}
             alt="Wood product 3"
+            width={90}
+            height={90}
             className="w-full h-full object-cover object-center"
           />
         </div>

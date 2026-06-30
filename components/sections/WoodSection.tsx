@@ -29,7 +29,7 @@ export default function WoodSection({ woodTypes }: WoodSectionProps) {
           THE WOOD WE <br /> WORK WITH
         </h2>
 
-        <div className="flex flex-wrap justify-start gap-[175px] pl-[126px]">
+        <div className="flex flex-wrap justify-start gap-[120px] pl-[126px]">
           {woodTypes.map((wood) => {
             const imageSrc = getImageUrl(wood.image ?? wood.images?.[0]?.url);
             return (
