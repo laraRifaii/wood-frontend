@@ -8,6 +8,7 @@ import {
   ReactNode,
   useCallback,
 } from "react";
+import axios from "axios";
 
 interface User {
   id: string;
@@ -31,16 +32,21 @@ const AuthContext = createContext<AuthContextType>({
   logout: async () => {},
 });
 
-const API = process.env.NEXT_PUBLIC_API_URL!;
 const ACCESS_TOKEN_KEY = "access_token";
 const REFRESH_TOKEN_KEY = "refresh_token";
 const USER_KEY = "auth_user";
+
+// Plain axios instance — NO interceptors, used only for auth calls
+// to avoid circular dependency with the main `api` instance's 401 refresh logic
+const authApi = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  headers: { "Content-Type": "application/json" },
+});
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // On mount — try to restore session using stored refresh token
   useEffect(() => {
     const restoreSession = async () => {
       const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY);
@@ -52,24 +58,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       try {
-        const res = await fetch(`${API}/auth/refresh`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ refreshToken }),
-        });
+        const { data } = await authApi.post("/auth/refresh", { refreshToken });
 
-        if (res.ok) {
-          const data = await res.json();
-          localStorage.setItem(ACCESS_TOKEN_KEY, data.accessToken);
-          localStorage.setItem(REFRESH_TOKEN_KEY, data.refreshToken);
+        localStorage.setItem(ACCESS_TOKEN_KEY, data.accessToken);
+        localStorage.setItem(REFRESH_TOKEN_KEY, data.refreshToken);
 
-          const parsedUser = storedUser ? JSON.parse(storedUser) : null;
-          setUser(parsedUser || data.user);
-        } else {
-          // Refresh token expired — clear everything
-          clearStorage();
-        }
+        const parsedUser = storedUser ? JSON.parse(storedUser) : null;
+        setUser(parsedUser || data.user);
       } catch {
+        // Refresh token expired or invalid — clear everything
         clearStorage();
       } finally {
         setIsLoading(false);
@@ -87,26 +84,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = useCallback(async (email: string, password: string) => {
     try {
-      const res = await fetch(`${API}/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const { data } = await authApi.post("/auth/login", { email, password });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        return { error: data.message || "Invalid email or password" };
-      }
-
-      // Store both tokens and user in localStorage
       localStorage.setItem(ACCESS_TOKEN_KEY, data.accessToken);
       localStorage.setItem(REFRESH_TOKEN_KEY, data.refreshToken);
       localStorage.setItem(USER_KEY, JSON.stringify(data.user));
 
       setUser(data.user);
       return {};
-    } catch {
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return { error: error.response?.data?.message || "Invalid email or password" };
+      }
       return { error: "Network error. Please try again." };
     }
   }, []);
@@ -115,21 +104,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
     try {
       if (accessToken) {
-        await fetch(`${API}/auth/logout`, {
-          method: "POST",
-          headers: { Authorization: `Bearer ${accessToken}` },
-        });
+        await authApi.post(
+          "/auth/logout",
+          {},
+          { headers: { Authorization: `Bearer ${accessToken}` } }
+        );
       }
     } finally {
       clearStorage();
       setUser(null);
     }
   }, []);
-
-  // Sync token to axios on every render where localStorage has it
-  useEffect(() => {
-    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
-  }, [user]);
 
   return (
     <AuthContext.Provider

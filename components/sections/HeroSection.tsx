@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import Button from "../button/Button";
 import { getImageUrl } from "@/lib/utils";
 
 interface HeroProps {
