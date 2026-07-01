@@ -43,10 +43,10 @@ export default function ContactSection() {
   };
 
   return (
-    <section className="overflow-hidden pt-6">
+    <section className="overflow-hidden pt-6 pl-0">
       <div className="bg-gradient-to-t from-white/5 to-transparent pointer-events-none" />
 
-      <div className="mx-auto px-4 md:px-6 lg:px-12">
+      <div className="mx-6 md:ml-[100px]">
         <h2 className="font-kyiv uppercase text-white lg:ml-[263px] mb-12 leading-[133%] text-[40px] md:text-[60px] lg:text-[90px] tracking-normal">
           ANY QUESTIONS?
         </h2>
@@ -57,7 +57,7 @@ export default function ContactSection() {
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 items-start">
-          <div className="flex flex-col gap-4 w-full w-[400px] md:max-w-[598px] md:min-h-[555px] lg:ml-[102px]">
+          <div className="flex flex-col gap-4 w-full w-[400px] md:w-[598px] md:min-h-[555px] ">
             {status === "success" && (
               <div className="px-4 py-3 rounded-2xl border border-steel/40 bg-steel/10 text-sm text-steel-light font-inter">
                 ✓ Message sent! We'll be in touch soon.
