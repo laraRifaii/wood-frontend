@@ -8,7 +8,11 @@ interface AdvantagesProps {
   items: { description: string }[];
 }
 
-export default function AdvantagesSection({ items, image, cta }: AdvantagesProps) {
+export default function AdvantagesSection({
+  items,
+  image,
+  cta,
+}: AdvantagesProps) {
   return (
     <section className="overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-4 py-6 md:px-0 relative">
@@ -20,7 +24,10 @@ export default function AdvantagesSection({ items, image, cta }: AdvantagesProps
           {/* Mobile list */}
           <ul className="flex flex-col gap-4 md:hidden mb-8">
             {items.map((item, i) => (
-              <li key={i} className="text-white text-sm font-inter leading-relaxed">
+              <li
+                key={i}
+                className="text-white text-sm font-inter leading-relaxed"
+              >
                 {item.description}
               </li>
             ))}
@@ -41,18 +48,18 @@ export default function AdvantagesSection({ items, image, cta }: AdvantagesProps
 
           {/* Mobile CTA — exact: 219x33, radius 42px, left 76px */}
           <div className="md:hidden mb-8 ml-[76px]">
-            
-           <a   href="/contact"
+            <a
+              href="/contact"
               className="flex items-center justify-center bg-steel text-white transition-opacity hover:opacity-80 font-inter font-semibold text-sm"
               style={{
-                width: '219px',
-                height: '33px',
-                borderRadius: '42px',
-                paddingTop: '10px',
-                paddingRight: '17px',
-                paddingBottom: '10px',
-                paddingLeft: '17px',
-                gap: '10px',
+                width: "219px",
+                height: "33px",
+                borderRadius: "42px",
+                paddingTop: "10px",
+                paddingRight: "17px",
+                paddingBottom: "10px",
+                paddingLeft: "17px",
+                gap: "10px",
               }}
             >
               {cta}
@@ -74,7 +81,10 @@ export default function AdvantagesSection({ items, image, cta }: AdvantagesProps
             )}
             <ul className="flex flex-col gap-6">
               {items.map((item, i) => (
-                <li key={i} className="font-inter font-medium text-[30px] leading-[139%] tracking-normal text-white">
+                <li
+                  key={i}
+                  className="font-inter font-medium text-[30px] leading-[139%] tracking-normal text-white"
+                >
                   {item.description}
                 </li>
               ))}
@@ -83,11 +93,16 @@ export default function AdvantagesSection({ items, image, cta }: AdvantagesProps
 
           {/* Desktop CTA */}
           <div className="hidden md:flex justify-start pl-[248px]">
-            
-            <a  href="/contact"
-              className="flex items-center justify-center bg-steel text-white transition-opacity hover:opacity-80 rounded-[42px] gap-[10px] pt-[11px] pr-[70px] pb-[11px] pl-[70px] w-[472px] h-[58px] font-inter font-semibold text-lg"
+            <a
+              href="/contact"
+              className="flex items-center justify-center bg-steel text-white transition-opacity hover:opacity-80 rounded-[42px] h-[58px] pt-[11px] pr-[70px] pb-[11px] pl-[70px]"
             >
-              {cta}
+              <span
+                className="font-inter font-bold text-[30px] leading-[100%] tracking-normal whitespace-nowrap"
+                style={{ width: "332px", height: "36px" }}
+              >
+                {cta}
+              </span>
             </a>
           </div>
         </div>
