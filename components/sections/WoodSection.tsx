@@ -11,7 +11,7 @@ interface WoodSectionProps {
 export default function WoodSection({ woodTypes }: WoodSectionProps) {
   return (
     <section className="overflow-hidden">
-      <div className="max-w-[1440px] mx-auto px-4 py-6 relative">
+      <div className="max-w-[1440px]  px-4 py-6 relative">
         {/* Single responsive title */}
         <h2 className="font-kyiv uppercase text-white mb-10  md:mx-16 pl-0 md:pl-[126px] text-[30px] md:text-[60px] lg:text-[90px] leading-[133%] tracking-normal">
           THE WOOD WE <br /> WORK WITH

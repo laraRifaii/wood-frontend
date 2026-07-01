@@ -57,7 +57,7 @@ export default function ContactSection() {
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 items-start">
-          <div className="flex flex-col gap-4 w-full md:max-w-[598px] md:min-h-[555px] lg:ml-[102px]">
+          <div className="flex flex-col gap-4 w-full w-[400px] md:max-w-[598px] md:min-h-[555px] lg:ml-[102px]">
             {status === "success" && (
               <div className="px-4 py-3 rounded-2xl border border-steel/40 bg-steel/10 text-sm text-steel-light font-inter">
                 ✓ Message sent! We'll be in touch soon.
